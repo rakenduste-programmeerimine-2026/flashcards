@@ -1,0 +1,62 @@
+name: Feature or task
+description: A piece of work that moves the product forward
+title: "type(scope): short description in the imperative"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One update, one issue, one branch, one pull request. Keep this issue to a single change.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What does this give the user, or why does the team need it?
+      placeholder: Without this, a student cannot...
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is included. Anything not listed here belongs in another issue.
+      value: |
+        -
+        -
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How a reviewer can tell this is finished.
+      value: |
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Role
+      description: Who owns this. Add the matching role label as well.
+      options:
+        - Frontend & UX
+        - Backend & security
+        - Database & quality
+        - Whole team
+    validations:
+      required: true
+  - type: input
+    id: depends
+    attributes:
+      label: Depends on
+      description: Issue numbers that have to be merged first.
+      placeholder: "#12, #15"
+  - type: checkboxes
+    id: craft
+    attributes:
+      label: Visual craft
+      description: For anything the user sees.
+      options:
+        - label: This issue produces something visible, so it carries the `ux: craft` label and must not look like generic AI output
+          required: false
