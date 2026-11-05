@@ -1,0 +1,46 @@
+name: Bug
+description: Something does not work the way it should
+title: "fix(scope): short description of the broken behaviour"
+labels: ["type: fix"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens
+      description: The behaviour you see, and the behaviour you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: Local or deployed, which browser, phone or desktop.
+      placeholder: Deployed, Chrome on Android
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Likely role
+      options:
+        - Frontend & UX
+        - Backend & security
+        - Database & quality
+        - Not sure yet
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots, console output or the pasted answer that caused it
+      description: Remove anything private before pasting. Never paste keys.
