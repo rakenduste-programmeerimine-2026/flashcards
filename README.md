@@ -57,15 +57,37 @@ One person per role for Project 1.
 
 ## Setup
 
-> Filled in by issue #2 (scaffold) and issue #3 (Supabase). Until then there is nothing to run.
+Node 20.9 or newer.
 
 ```bash
 npm install
-cp .env.example .env.local   # paste the Supabase keys from the team's shared place
-npm run dev
+npm run dev        # http://localhost:3000
 ```
 
+The database comes next: the local Supabase stack is issue #39 and the full step-by-step guide
+is issue #40 (`docs/SETUP.md`).
+
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Development server with Turbopack |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript with no emit |
+| `npm run format` | Prettier, writes changes |
+| `npm run format:check` | Prettier, check only |
+
 Never commit `.env.local`. `.env.example` holds placeholder values only.
+
+## Project layout
+
+```
+app/           routes and pages (App Router)
+components/    React components, one folder per area
+lib/           Supabase clients, data access, parsing, i18n helpers
+messages/      translation dictionaries, one file per locale
+docs/          planning, design and setup documentation
+```
 
 ## Documentation
 
