@@ -1,0 +1,100 @@
+/*
+ * Design tokens. Every colour, size and radius in the app comes from here.
+ * A component that needs a value not in this file is a reason to add a token,
+ * not a reason to write a literal. See docs/DESIGN.md for the reasoning.
+ */
+
+:root {
+  /* --- neutrals, biased slightly towards the indigo accent so they read as chosen --- */
+  --color-bg: #e9ecf1;
+  --color-surface: #ffffff;
+  --color-surface-2: #f3f5f9;
+  --color-ink: #12151c;
+  --color-muted: #5b6476;
+  --color-line: #d2d8e2;
+
+  /* --- accent and semantics --- */
+  --color-accent: #3b35cc;
+  --color-accent-soft: #e5e4fb;
+  --color-on-accent: #ffffff;
+  --color-good: #0d7f63;
+  --color-bad: #b3431a;
+
+  /* --- type --- */
+  --font-display: var(--font-bricolage), "Trebuchet MS", sans-serif;
+  --font-body: var(--font-source-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --text-xs: 0.75rem; /* 12px — mono labels, counters */
+  --text-sm: 0.875rem; /* 14px — secondary text */
+  --text-base: 1rem; /* 16px — body */
+  --text-md: 1.0625rem; /* 17px — card meaning */
+  --text-lg: 1.3125rem; /* 21px — deck names */
+  --text-xl: 1.625rem; /* 26px — section headings */
+  --text-2xl: clamp(1.7rem, 5.4vw, 2.5rem); /* page titles */
+  --text-3xl: clamp(1.6rem, 6vw, 2.5rem); /* the term on a flashcard */
+
+  --leading-tight: 1.1;
+  --leading-normal: 1.55;
+  --tracking-tight: -0.025em;
+  --tracking-label: 0.12em;
+
+  /* --- space, on a 4px grid --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  /* --- shape --- */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.125rem;
+  --radius-pill: 999px;
+
+  /* a single card shadow, used only on the flashcard itself */
+  --shadow-card: 0 16px 34px -28px rgba(10, 14, 30, 0.55);
+
+  /* --- layout --- */
+  --measure: 62ch; /* readable line length for running text */
+  --content-width: 55rem; /* 880px main column */
+  --gutter: max(1rem, env(safe-area-inset-left, 0px));
+}
+
+/* Dark mode for everybody whose system asks for it, unless they picked light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #0c0e13;
+    --color-surface: #161a22;
+    --color-surface-2: #1e232d;
+    --color-ink: #e9ecf2;
+    --color-muted: #9aa4b6;
+    --color-line: #2b313d;
+    --color-accent: #9d97ff;
+    --color-accent-soft: #232145;
+    --color-on-accent: #11121f;
+    --color-good: #4ed6ac;
+    --color-bad: #ff9466;
+    color-scheme: dark;
+  }
+}
+
+/* The same values again for an explicit choice, so a toggle wins in both directions. */
+:root[data-theme="dark"] {
+  --color-bg: #0c0e13;
+  --color-surface: #161a22;
+  --color-surface-2: #1e232d;
+  --color-ink: #e9ecf2;
+  --color-muted: #9aa4b6;
+  --color-line: #2b313d;
+  --color-accent: #9d97ff;
+  --color-accent-soft: #232145;
+  --color-on-accent: #11121f;
+  --color-good: #4ed6ac;
+  --color-bad: #ff9466;
+  color-scheme: dark;
+}
