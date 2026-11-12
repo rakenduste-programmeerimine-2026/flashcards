@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Flashcards",
+    "tagline": "AI vastusest kaardipakk, mida saab kohe harjutada"
+  },
+  "nav": {
+    "aria": "Kolm sammu",
+    "skip": "Liigu sisu juurde",
+    "step": "Samm {step}",
+    "current": "praegune samm",
+    "steps": {
+      "prompt": {
+        "name": "Juhend",
+        "summary": "Kopeeri valmis juhend oma AI-vestlusse"
+      },
+      "paste": {
+        "name": "Kleebi",
+        "summary": "Kleebi vastus ja vaata kaardid enne salvestamist üle"
+      },
+      "practise": {
+        "name": "Harjuta",
+        "summary": "Käi pakk läbi juhuslikus järjekorras"
+      }
+    }
+  },
+  "home": {
+    "title": "Kolm sammu kaardipakini",
+    "lede": "Kopeeri juhend oma AI-vestlusse koos õppematerjaliga, kleebi vastus siia ja harjuta kaarte juhuslikus järjekorras. Ühtegi kaarti ei pea käsitsi kirjutama.",
+    "privacy": "Rakendus ei ole AI-ga ühendatud. Õppematerjal jääb sinu arvutisse — siia tuleb ainult valmis vastus.",
+    "next": "Mine kleepimise juurde"
+  },
+  "empty": {
+    "decks": {
+      "title": "Ühtegi pakki veel ei ole",
+      "body": "Esimene pakk tekib siis, kui kleebid teises sammus AI vastuse. Käsitsi kaarte kirjutama ei pea.",
+      "action": "Kleebi vastus"
+    },
+    "paste": {
+      "title": "Siia pole veel midagi kleebitud",
+      "body": "Võta esimesest sammust juhend, lase AI-l õppematerjalist mõisted välja kirjutada ja kleebi kogu vastus siia.",
+      "action": "Ava juhend"
+    }
+  },
+  "status": {
+    "loading": "Laadin…",
+    "error": {
+      "title": "See ei õnnestunud",
+      "body": "Server ei vastanud. Proovi uuesti — kleebitud tekst jääb alles.",
+      "retry": "Proovi uuesti"
+    }
+  },
+  "card": {
+    "term": "Mõiste",
+    "meaning": "Tähendus",
+    "hidden": "Tähendus on peidetud, kuni selle ise avad",
+    "count_one": "{count} kaart",
+    "count_other": "{count} kaarti"
+  }
+}
