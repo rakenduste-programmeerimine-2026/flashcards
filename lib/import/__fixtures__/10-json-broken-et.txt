@@ -1,0 +1,3 @@
+[
+  { "moiste": "Barokk", "tahendus": "17. sajandi kunstistiil." },
+  { "moiste": "Rokokoo", "tahendus": "Kerge 18. sajandi stiil." },
