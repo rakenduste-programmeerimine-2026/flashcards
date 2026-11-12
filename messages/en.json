@@ -73,6 +73,16 @@
       "privacy": "Your material stays in your own chat. Only the finished answer is pasted here."
     },
     "next": "Next: paste the answer",
-    "text": "Make flashcards out of the study material below.\n\nFormat - every card on exactly two lines, one blank line between cards:\n\nTERM: <the term or name>\nMEANING: <one sentence of explanation>\n\nRules:\n- Use only what is in the material. Do not invent anything.\n- Keep dates, numbers and names exactly as they appear in the material.\n- A term appears on one card only.\n- A meaning fits on one line and stays under 200 characters.\n- No heading, no introduction, no numbering, no summary. Start with the first card.\n- Skip the parts of the material that hold nothing worth memorising.\n\nStudy material:\n<paste your material here>"
+    "variantLabel": "Prompt shape",
+    "variants": {
+      "text": "Text",
+      "json": "JSON"
+    },
+    "variantHint": {
+      "text": "The usual choice. Cards come back as TERM and MEANING lines.",
+      "json": "If your model keeps breaking the text format, ask for the same thing as JSON. Pasting accepts either."
+    },
+    "text": "Make flashcards out of the study material below.\n\nFormat - every card on exactly two lines, one blank line between cards:\n\nTERM: <the term or name>\nMEANING: <one sentence of explanation>\n\nRules:\n- Use only what is in the material. Do not invent anything.\n- Keep dates, numbers and names exactly as they appear in the material.\n- A term appears on one card only.\n- A meaning fits on one line and stays under 200 characters.\n- No heading, no introduction, no numbering, no summary. Start with the first card.\n- Skip the parts of the material that hold nothing worth memorising.\n\nStudy material:\n<paste your material here>",
+    "jsonText": "Make flashcards out of the study material below.\n\nAnswer with a JSON array only, with no explanation around it:\n\n[\n  { \"term\": \"<the term or name>\", \"meaning\": \"<one sentence of explanation>\" }\n]\n\nRules:\n- Use only what is in the material. Do not invent anything.\n- Keep dates, numbers and names exactly as they appear in the material.\n- A term appears on one card only.\n- \"meaning\" is one sentence, under 200 characters.\n- No other fields and no comments.\n- Skip the parts of the material that hold nothing worth memorising.\n\nStudy material:\n<paste your material here>"
   }
 }

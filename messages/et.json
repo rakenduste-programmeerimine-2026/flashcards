@@ -73,6 +73,16 @@
       "privacy": "Materjal jääb sinu vestlusesse. Siia tuleb ainult valmis vastus."
     },
     "next": "Edasi: kleebi vastus",
-    "text": "Koosta allolevast õppematerjalist mõistekaardid.\n\nVorming - iga kaart täpselt kahel real, kaartide vahel tühi rida:\n\nMÕISTE: <mõiste või nimi>\nTÄHENDUS: <seletus ühe lausega>\n\nReeglid:\n- Kasuta ainult materjalis olevat infot. Ära leiuta midagi juurde.\n- Jäta kuupäevad, arvud ja nimed täpselt nii, nagu need materjalis on.\n- Üks mõiste esineb ainult ühel kaardil.\n- Tähendus mahub ühele reale ja on kuni 200 tähemärki.\n- Ära lisa pealkirja, sissejuhatust, nummerdust ega kokkuvõtet. Alusta kohe esimesest kaardist.\n- Jäta vahele materjali osad, milles pole pähe õpitavat mõistet.\n\nÕppematerjal:\n<kleebi oma materjal siia>"
+    "variantLabel": "Juhendi kuju",
+    "variants": {
+      "text": "Tekst",
+      "json": "JSON"
+    },
+    "variantHint": {
+      "text": "Tavaline valik. Kaardid tulevad ridadena MÕISTE ja TÄHENDUS.",
+      "json": "Kui mudel ei pea tekstivormist kinni, küsi sama asja JSON-ina. Kleepimine töötab mõlemaga."
+    },
+    "text": "Koosta allolevast õppematerjalist mõistekaardid.\n\nVorming - iga kaart täpselt kahel real, kaartide vahel tühi rida:\n\nMÕISTE: <mõiste või nimi>\nTÄHENDUS: <seletus ühe lausega>\n\nReeglid:\n- Kasuta ainult materjalis olevat infot. Ära leiuta midagi juurde.\n- Jäta kuupäevad, arvud ja nimed täpselt nii, nagu need materjalis on.\n- Üks mõiste esineb ainult ühel kaardil.\n- Tähendus mahub ühele reale ja on kuni 200 tähemärki.\n- Ära lisa pealkirja, sissejuhatust, nummerdust ega kokkuvõtet. Alusta kohe esimesest kaardist.\n- Jäta vahele materjali osad, milles pole pähe õpitavat mõistet.\n\nÕppematerjal:\n<kleebi oma materjal siia>",
+    "jsonText": "Koosta allolevast õppematerjalist mõistekaardid.\n\nVasta ainult JSON-massiiviga, ilma selgituste ja saatesõnata:\n\n[\n  { \"moiste\": \"<mõiste või nimi>\", \"tahendus\": \"<seletus ühe lausega>\" }\n]\n\nReeglid:\n- Kasuta ainult materjalis olevat infot. Ära leiuta midagi juurde.\n- Jäta kuupäevad, arvud ja nimed täpselt nii, nagu need materjalis on.\n- Üks mõiste esineb ainult ühel kaardil.\n- \"tahendus\" on üks lause, kuni 200 tähemärki.\n- Ära lisa muid välju ega kommentaare.\n- Jäta vahele materjali osad, milles pole pähe õpitavat mõistet.\n\nÕppematerjal:\n<kleebi oma materjal siia>"
   }
 }
