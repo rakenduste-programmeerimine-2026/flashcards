@@ -1,0 +1,206 @@
+.frame {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+/* Visible only once it is focused, which is the point of a skip link. */
+.skip {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 10;
+  transform: translateY(-200%);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: transform 120ms ease-out;
+}
+
+.skip:focus-visible {
+  transform: translateY(0);
+}
+
+/* --- header --- */
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.bar,
+.nav {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  text-decoration: none;
+  flex: 0 0 auto;
+}
+
+.mark {
+  width: 1.375rem;
+  height: 1.375rem;
+  color: var(--color-accent);
+}
+
+/* The tagline is the first thing to go when the screen is narrow. */
+.tagline {
+  display: none;
+  min-width: 0;
+}
+
+@media (min-width: 46rem) {
+  .tagline {
+    display: block;
+    border-left: 1px solid var(--color-line);
+    padding-left: var(--space-3);
+  }
+}
+
+.slot {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 auto;
+}
+
+/* --- the three steps --- */
+.nav {
+  padding-bottom: var(--space-3);
+}
+
+.steps {
+  /* 0, 0.5 or 1 — set by StepNav, consumed by the filled rail below. */
+  --progress: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+}
+
+/* The rail and its filled portion: progress through the journey, drawn the same
+   way progress through a deck is drawn in practice. */
+.steps::before,
+.steps::after {
+  content: "";
+  position: absolute;
+  top: 0.8125rem;
+  left: calc(100% / 6);
+  right: calc(100% / 6);
+  height: 2px;
+  border-radius: var(--radius-pill);
+}
+
+.steps::before {
+  background: var(--color-line);
+}
+
+.steps::after {
+  right: auto;
+  width: calc((100% / 3 * 2) * var(--progress));
+  background: var(--color-accent);
+}
+
+.step {
+  min-width: 0;
+}
+
+.stepLink {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-1) var(--space-2);
+  color: var(--color-muted);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  border: 2px solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+}
+
+.stepText {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  min-width: 0;
+  text-align: center;
+}
+
+.stepNumber {
+  display: none;
+}
+
+.stepName {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 30rem) {
+  .stepNumber {
+    display: block;
+  }
+}
+
+.stepLink[data-state="done"] .dot {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.stepLink[data-state="current"] {
+  color: var(--color-ink);
+}
+
+.stepLink[data-state="current"] .dot {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.stepLink:hover {
+  color: var(--color-ink);
+}
+
+/* --- content column --- */
+.main {
+  max-width: var(--content-width);
+  width: 100%;
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  padding-block: var(--space-6) var(--space-8);
+}
