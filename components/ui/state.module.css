@@ -1,0 +1,118 @@
+/* --- empty --- */
+.empty {
+  display: grid;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-6) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+}
+
+@media (min-width: 34rem) {
+  .empty {
+    grid-template-columns: auto 1fr;
+    gap: var(--space-6);
+  }
+}
+
+/* A card that does not exist yet: dashed outline, a readable term, a hidden meaning. */
+.ghost {
+  display: grid;
+  align-content: center;
+  gap: var(--space-3);
+  width: 7.5rem;
+  height: 5.5rem;
+  padding: var(--space-4);
+  border: 2px dashed var(--color-line);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface-2);
+}
+
+.ghostTerm,
+.ghostMeaning {
+  display: block;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
+.ghostTerm {
+  width: 70%;
+  opacity: 0.55;
+}
+
+.ghostMeaning {
+  width: 100%;
+  background: var(--color-muted);
+  opacity: 0.4;
+  filter: blur(3px);
+}
+
+.copy {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--text-lg);
+}
+
+.body {
+  color: var(--color-muted);
+  max-width: var(--measure);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* --- error --- */
+.error {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-bad);
+  border-radius: var(--radius-lg);
+}
+
+.error .actions,
+.error button {
+  margin-top: var(--space-2);
+}
+
+/* --- loading --- */
+.loading {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.skeleton {
+  display: block;
+  height: 3.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-line);
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 0%,
+    var(--color-surface-2) 50%,
+    var(--color-surface) 100%
+  );
+  background-size: 300% 100%;
+  animation: sweep 1.4s linear infinite;
+}
+
+@keyframes sweep {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -150% 0;
+  }
+}
