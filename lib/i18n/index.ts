@@ -1,24 +1,20 @@
 "use client";
 
-import { dictionaries } from "./dictionaries";
-import { DEFAULT_LOCALE, type Locale } from "./locales";
-import { translate, type MessageKey, type MessageVars } from "./translate";
+import { useI18n } from "./context";
 
-export type { MessageKey, Translate } from "./translate";
+export { I18nProvider, useI18n } from "./context";
+export type { MessageKey, MessageVars, Translate } from "./translate";
 export { LOCALES, DEFAULT_LOCALE, type Locale } from "./locales";
 
-/**
- * The only way a component reads a string.
- *
- * Right now it always answers in the default locale; the language switch and the
- * remembered choice arrive in issue #6 behind this same hook, so no component has to
- * change when they do.
- */
+/** The only way a component reads a string. */
 export function useT() {
-  return (key: MessageKey, vars?: MessageVars) =>
-    translate(dictionaries[DEFAULT_LOCALE], key, vars);
+  return useI18n().t;
 }
 
-export function useLocale(): Locale {
-  return DEFAULT_LOCALE;
+export function useLocale() {
+  return useI18n().locale;
+}
+
+export function useSetLocale() {
+  return useI18n().setLocale;
 }
