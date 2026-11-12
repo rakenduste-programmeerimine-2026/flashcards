@@ -39,7 +39,7 @@
   display: inline-flex;
   padding: 2px;
   background: var(--color-surface-2);
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-control);
   border-radius: var(--radius-pill);
 }
 
@@ -54,7 +54,7 @@
 
 .variant[aria-pressed="true"] {
   background: var(--color-surface);
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-control);
   color: var(--color-ink);
 }
 
