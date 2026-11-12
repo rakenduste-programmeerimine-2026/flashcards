@@ -1,0 +1,54 @@
+.page {
+  display: grid;
+  gap: var(--space-6);
+  justify-items: start;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.lede {
+  max-width: var(--measure);
+  font-size: var(--text-md);
+  color: var(--color-muted);
+}
+
+.journey {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.journeyStep {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+  max-width: var(--measure);
+  min-width: 0;
+}
+
+.journeyStep:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.journeyNumber {
+  color: var(--color-accent);
+  font-size: var(--text-sm);
+}
+
+.privacy {
+  max-width: var(--measure);
+  padding: var(--space-4);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}
