@@ -115,8 +115,27 @@
   min-width: 9rem;
 }
 
-.keys {
+.aside {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
   text-align: center;
+}
+
+/* Quieter than the three actions above it: it changes the order, not the round. */
+.reshuffle {
+  min-height: 2rem;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.notice {
+  min-height: 1.25rem;
+  text-align: center;
+  color: var(--color-accent);
 }
 
 .counts {

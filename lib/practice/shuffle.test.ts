@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { shuffle } from "./shuffle";
+import { reshuffleRemaining, shuffle } from "./shuffle";
 
 /** A fixed sequence, so a test about order is not a test about luck. */
 function sequence(values: number[]): () => number {
@@ -57,5 +57,35 @@ describe("shuffle", () => {
 
     expect([...seen, ...rest].sort()).toEqual([...CARDS].sort());
     expect([...seen, ...rest].slice(0, 3)).toEqual(seen);
+  });
+});
+
+describe("reshuffleRemaining", () => {
+  it("leaves the cards before the cut exactly where they are", () => {
+    const result = reshuffleRemaining(CARDS, 3);
+
+    expect(result.slice(0, 3)).toEqual(CARDS.slice(0, 3));
+  });
+
+  it("keeps every card exactly once", () => {
+    const result = reshuffleRemaining(CARDS, 3);
+
+    expect([...result].sort()).toEqual([...CARDS].sort());
+  });
+
+  it("reorders the tail", () => {
+    const result = reshuffleRemaining(
+      CARDS,
+      2,
+      sequence([0.9, 0.1, 0.8, 0.25, 0.6]),
+    );
+
+    expect(result.slice(2)).not.toEqual(CARDS.slice(2));
+  });
+
+  it("does nothing useful but does not break at the ends of the deck", () => {
+    expect(reshuffleRemaining(CARDS, 0).length).toBe(CARDS.length);
+    expect(reshuffleRemaining(CARDS, CARDS.length)).toEqual(CARDS);
+    expect(reshuffleRemaining(CARDS, 99)).toEqual(CARDS);
   });
 });
