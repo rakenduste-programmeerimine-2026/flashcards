@@ -13,6 +13,10 @@ const NOTES: MessageKey[] = [
 
 type CopyState = "idle" | "copied" | "failed";
 
+/** Same prompt, two shapes. The parser in #12/#13 accepts both answers. */
+const VARIANTS = ["text", "json"] as const;
+type Variant = (typeof VARIANTS)[number];
+
 /**
  * Step one. The prompt is the product, so it gets the room: a readable mono block
  * that scrolls on its own, one copy action, and a card showing the shape the answer
@@ -22,6 +26,10 @@ export function PromptView() {
   const t = useT();
   const promptRef = useRef<HTMLPreElement>(null);
   const [state, setState] = useState<CopyState>("idle");
+  const [variant, setVariant] = useState<Variant>("text");
+
+  const promptText =
+    variant === "json" ? t("prompt.jsonText") : t("prompt.text");
 
   // "Copied" is a confirmation, not a permanent label.
   useEffect(() => {
@@ -31,9 +39,8 @@ export function PromptView() {
   }, [state]);
 
   async function copy() {
-    const text = t("prompt.text");
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(promptText);
       setState("copied");
     } catch {
       // Clipboard refused — an insecure origin, or the user said no. Select the
@@ -66,6 +73,26 @@ export function PromptView() {
           <h2 id="prompt-label" className="label">
             {t("prompt.blockLabel")}
           </h2>
+          <div
+            className={styles.variants}
+            role="group"
+            aria-label={t("prompt.variantLabel")}
+          >
+            {VARIANTS.map((option) => (
+              <button
+                key={option}
+                type="button"
+                className={`label ${styles.variant}`}
+                aria-pressed={option === variant}
+                onClick={() => {
+                  setVariant(option);
+                  setState("idle");
+                }}
+              >
+                {t(`prompt.variants.${option}`)}
+              </button>
+            ))}
+          </div>
           <Button
             variant="primary"
             onClick={copy}
@@ -76,8 +103,9 @@ export function PromptView() {
           </Button>
         </div>
         <pre ref={promptRef} className={styles.prompt} tabIndex={0}>
-          {t("prompt.text")}
+          {promptText}
         </pre>
+        <p className={styles.hint}>{t(`prompt.variantHint.${variant}`)}</p>
         {/* One region for both outcomes, so a screen reader hears the result once. */}
         <p
           className={styles.feedback}
