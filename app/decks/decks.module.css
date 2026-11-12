@@ -1,0 +1,118 @@
+.page {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.head {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.lede {
+  max-width: var(--measure);
+  font-size: var(--text-md);
+  color: var(--color-muted);
+}
+
+.problem {
+  color: var(--color-bad);
+  font-size: var(--text-sm);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* A deck is a row with a border, not a floating card. Only the flashcard itself
+   gets a shadow, so the thing you practise is the thing that stands out. */
+.deck {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  min-width: 0;
+}
+
+@media (min-width: 40rem) {
+  .deck {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+  }
+}
+
+/* The deck that was just saved, so the student sees where it landed. */
+.deck[data-saved] {
+  border-color: var(--color-accent);
+  box-shadow: inset 3px 0 0 0 var(--color-accent);
+}
+
+.about {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.name {
+  font-size: var(--text-lg);
+  overflow-wrap: anywhere;
+}
+
+.nameLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nameLink:hover {
+  text-decoration: underline;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.saved {
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* --- delete confirmation, inside the row --- */
+.confirm {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-bad);
+  border-radius: var(--radius-md);
+}
+
+@media (min-width: 40rem) {
+  .confirm {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
+
+.confirmQuestion {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.confirmBody {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}

@@ -115,5 +115,21 @@
     "rateLimited": "Too many tries in a row. Wait a moment and try again.",
     "server": "Something went wrong on the server. Try again.",
     "unknown": "Something went wrong. Try again."
+  },
+  "decks": {
+    "title": "My decks",
+    "lede": "Pick a deck and start practising. You can look the cards over and fix them first.",
+    "practise": "Practise",
+    "edit": "Edit",
+    "delete": "Delete",
+    "justSaved": "Just saved",
+    "updated": "Changed {date}",
+    "confirm": {
+      "question": "Delete the deck “{name}”?",
+      "body": "The cards go with it. This cannot be undone.",
+      "yes": "Delete the deck",
+      "cancel": "Keep it",
+      "deleting": "Deleting…"
+    }
   }
 }
