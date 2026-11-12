@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { HomeView } from "./home-view";
+import { PromptView } from "./prompt-view";
 
 export const metadata: Metadata = {
   title: "Juhend",
 };
 
-export default function Home() {
-  return <HomeView />;
+export default function PromptPage() {
+  return <PromptView />;
 }

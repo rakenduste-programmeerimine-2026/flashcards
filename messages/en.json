@@ -28,12 +28,6 @@
       }
     }
   },
-  "home": {
-    "title": "Three steps to a deck",
-    "lede": "Copy the prompt into your own AI chat together with your study material, paste the answer here, and practise the cards in a random order. You never write a card by hand.",
-    "privacy": "This app is not connected to an AI. Your study material stays on your own computer — only the finished answer is pasted in.",
-    "next": "Go to pasting"
-  },
   "empty": {
     "decks": {
       "title": "No decks yet",
@@ -60,5 +54,25 @@
     "hidden": "The meaning stays hidden until you reveal it",
     "count_one": "{count} card",
     "count_other": "{count} cards"
+  },
+  "prompt": {
+    "title": "Copy this prompt into your AI chat",
+    "lede": "The prompt tells the AI what shape to write the terms in. Paste it into a chat together with your study material, then bring the answer to step two.",
+    "blockLabel": "Prompt",
+    "copy": "Copy the prompt",
+    "copied": "Copied",
+    "copyFailed": "The browser refused to copy. The text is selected now — press Ctrl+C or Cmd+C.",
+    "example": {
+      "label": "The answer comes back like this",
+      "term": "Reformation",
+      "meaning": "A 16th-century movement that split the western church."
+    },
+    "notes": {
+      "material": "Paste your study material at the end of the prompt, where it says.",
+      "messy": "You do not have to tidy the answer up. An intro sentence, numbering and bold markers do not get in the way.",
+      "privacy": "Your material stays in your own chat. Only the finished answer is pasted here."
+    },
+    "next": "Next: paste the answer",
+    "text": "Make flashcards out of the study material below.\n\nFormat - every card on exactly two lines, one blank line between cards:\n\nTERM: <the term or name>\nMEANING: <one sentence of explanation>\n\nRules:\n- Use only what is in the material. Do not invent anything.\n- Keep dates, numbers and names exactly as they appear in the material.\n- A term appears on one card only.\n- A meaning fits on one line and stays under 200 characters.\n- No heading, no introduction, no numbering, no summary. Start with the first card.\n- Skip the parts of the material that hold nothing worth memorising.\n\nStudy material:\n<paste your material here>"
   }
 }
