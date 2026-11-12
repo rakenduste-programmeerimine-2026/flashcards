@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useT } from "@/lib/i18n";
+import { LanguageSwitch } from "./language-switch";
 import { StepNav } from "./step-nav";
 import styles from "./shell.module.css";
 
@@ -55,8 +56,9 @@ export function SiteHeader() {
           <span>{t("app.name")}</span>
         </Link>
         <p className={`label ${styles.tagline}`}>{t("app.tagline")}</p>
-        {/* The language switch lands in this slot in issue #6. */}
-        <div className={styles.slot} data-slot="language" />
+        <div className={styles.slot}>
+          <LanguageSwitch />
+        </div>
       </div>
       <StepNav />
     </header>
