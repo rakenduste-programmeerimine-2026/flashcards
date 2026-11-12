@@ -171,3 +171,11 @@
   font-size: var(--text-md);
   color: var(--color-muted);
 }
+
+.needWork {
+  color: var(--color-bad);
+}
+
+.repeatRound {
+  color: var(--color-accent);
+}
