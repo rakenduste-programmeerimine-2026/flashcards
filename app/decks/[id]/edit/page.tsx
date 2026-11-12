@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+import { titleMetadata } from "@/lib/i18n/metadata";
 import { EditorView } from "./editor-view";
 
-export const metadata: Metadata = {
-  title: "Paki muutmine",
-};
+export function generateMetadata() {
+  return titleMetadata("meta.edit");
+}
 
 export default async function EditDeckPage({
   params,

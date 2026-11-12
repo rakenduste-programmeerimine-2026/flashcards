@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+import { titleMetadata } from "@/lib/i18n/metadata";
 import { PracticeView } from "./practice-view";
 
-export const metadata: Metadata = {
-  title: "Harjutamine",
-};
+export function generateMetadata() {
+  return titleMetadata("meta.practice");
+}
 
 export default async function PracticePage({
   params,
