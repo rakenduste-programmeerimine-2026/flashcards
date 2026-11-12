@@ -4,6 +4,7 @@ import {
   Source_Sans_3,
   IBM_Plex_Mono,
 } from "next/font/google";
+import { AppShell } from "@/components/shell/app-shell";
 import "./globals.css";
 
 /* Display: a grotesque with enough character to carry a flashcard term on its own. */
@@ -29,7 +30,10 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Flashcards",
+  title: {
+    default: "Flashcards",
+    template: "%s · Flashcards",
+  },
   description:
     "Turn an AI answer into a practice deck: copy the prompt, paste the answer, practise the cards.",
 };
@@ -42,7 +46,9 @@ export default function RootLayout({
       lang="et"
       className={`${bricolage.variable} ${sourceSans.variable} ${plexMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }

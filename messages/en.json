@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Flashcards",
+    "tagline": "An AI answer, turned into a deck you can practise"
+  },
+  "nav": {
+    "aria": "Three steps",
+    "skip": "Skip to content",
+    "step": "Step {step}",
+    "current": "current step",
+    "steps": {
+      "prompt": {
+        "name": "Prompt",
+        "summary": "Copy the ready-made prompt into your own AI chat"
+      },
+      "paste": {
+        "name": "Paste",
+        "summary": "Paste the answer and check the cards before saving"
+      },
+      "practise": {
+        "name": "Practise",
+        "summary": "Go through the deck in a random order"
+      }
+    }
+  },
+  "home": {
+    "title": "Three steps to a deck",
+    "lede": "Copy the prompt into your own AI chat together with your study material, paste the answer here, and practise the cards in a random order. You never write a card by hand.",
+    "privacy": "This app is not connected to an AI. Your study material stays on your own computer — only the finished answer is pasted in.",
+    "next": "Go to pasting"
+  },
+  "empty": {
+    "decks": {
+      "title": "No decks yet",
+      "body": "Your first deck appears once you paste an AI answer in step two. There are no cards to write by hand.",
+      "action": "Paste an answer"
+    },
+    "paste": {
+      "title": "Nothing pasted yet",
+      "body": "Take the prompt from step one, let the AI pull the terms out of your material, and paste the whole answer here.",
+      "action": "Open the prompt"
+    }
+  },
+  "status": {
+    "loading": "Loading…",
+    "error": {
+      "title": "That did not work",
+      "body": "The server did not answer. Try again — anything you pasted is still here.",
+      "retry": "Try again"
+    }
+  },
+  "card": {
+    "term": "Term",
+    "meaning": "Meaning",
+    "hidden": "The meaning stays hidden until you reveal it",
+    "count_one": "{count} card",
+    "count_other": "{count} cards"
+  }
+}
