@@ -43,6 +43,13 @@ scores use `font-variant-numeric: tabular-nums`, so digits do not shift while yo
 Scale steps exist for the things this product actually has: a term on a card, a page title, a
 deck name, a meaning, body text. There is no step without a use.
 
+Two border tokens, not one, and the difference matters. `--color-line` is a separator: the edge
+of a card, the rule under a heading. Nothing is identified by it, so it stays quiet.
+`--color-control` is the border of a thing you operate — a field, a button, a switch, a step dot —
+and it meets 3:1 against every surface it sits on, which WCAG asks of anything you need to see in
+order to find a control. `npm run check:contrast` checks both, in both themes, and runs as part of
+the build.
+
 ## Shape and space
 
 Space is a 4px grid, `--space-1` to `--space-8`. Radii go from `--radius-sm` on small controls to
