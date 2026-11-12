@@ -6,6 +6,7 @@ import {
 } from "next/font/google";
 import { AppShell } from "@/components/shell/app-shell";
 import { I18nProvider } from "@/lib/i18n";
+import { translateOnServer } from "@/lib/i18n/metadata";
 import { getLocale } from "@/lib/i18n/server";
 import "./globals.css";
 
@@ -31,14 +32,15 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Flashcards",
-    template: "%s · Flashcards",
-  },
-  description:
-    "Turn an AI answer into a practice deck: copy the prompt, paste the answer, practise the cards.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: {
+      default: "Flashcards",
+      template: "%s · Flashcards",
+    },
+    description: await translateOnServer("meta.description"),
+  };
+}
 
 export default async function RootLayout({
   children,
