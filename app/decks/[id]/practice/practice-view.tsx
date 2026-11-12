@@ -337,7 +337,10 @@ export function PracticeView({ deckId }: { deckId: string }) {
         </span>
       </p>
 
-      <div>
+      <div className={styles.actions}>
+        <ButtonLink href={`/decks/${deckId}/edit`}>
+          {t("practice.edit")}
+        </ButtonLink>
         <ButtonLink href="/decks">{t("practice.leave")}</ButtonLink>
       </div>
     </div>

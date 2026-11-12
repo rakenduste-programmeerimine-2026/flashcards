@@ -143,6 +143,7 @@
     "reshuffle": "Shuffle the rest",
     "reshuffled": "The remaining cards were shuffled",
     "leave": "Finish",
+    "edit": "Edit the deck",
     "counts": {
       "knew": "Knew {count}",
       "missed": "Missed {count}",
@@ -169,6 +170,27 @@
       "title": "This deck has no cards",
       "body": "Add cards under deck editing, and practice can start.",
       "action": "Edit the deck"
+    }
+  },
+  "editor": {
+    "title": "Edit the deck",
+    "lede": "The AI does not always get it right. Fix a meaning, add a term it missed, throw out the cards that are no use.",
+    "nameLabel": "Deck name",
+    "termLabel": "Term",
+    "meaningLabel": "Meaning",
+    "add": "Add a card",
+    "remove": "Remove card",
+    "save": "Save the changes",
+    "saving": "Saving…",
+    "saved": "The changes are saved",
+    "discard": "Discard the changes",
+    "back": "Back to the decks",
+    "practise": "Practise",
+    "unsaved": "Unsaved changes",
+    "problem": {
+      "needName": "The deck needs a name.",
+      "needCard": "A deck needs at least one card.",
+      "halfCard": "Every card needs both a term and a meaning. Fill the empty fields in or remove the card."
     }
   }
 }
