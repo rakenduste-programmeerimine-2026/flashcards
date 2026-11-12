@@ -131,5 +131,34 @@
       "cancel": "Keep it",
       "deleting": "Deleting…"
     }
+  },
+  "practice": {
+    "position": "{current} / {total}",
+    "hidden": "The meaning is hidden",
+    "reveal": "Show the meaning",
+    "knew": "I knew it",
+    "missed": "I did not know",
+    "leave": "Finish",
+    "counts": {
+      "knew": "Knew {count}",
+      "missed": "Missed {count}",
+      "left": "Left {count}"
+    },
+    "keys": {
+      "reveal": "Space shows the meaning",
+      "rate": "Left arrow: did not know. Right arrow: knew it"
+    },
+    "revealed": "The meaning is now shown",
+    "done": {
+      "title": "Round finished",
+      "score": "You knew {knew} cards out of {total}",
+      "again": "Start again",
+      "back": "Back to the decks"
+    },
+    "empty": {
+      "title": "This deck has no cards",
+      "body": "Add cards under deck editing, and practice can start.",
+      "action": "Edit the deck"
+    }
   }
 }
