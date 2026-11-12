@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm run check:messages && next build",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
