@@ -33,11 +33,6 @@
       "title": "No decks yet",
       "body": "Your first deck appears once you paste an AI answer in step two. There are no cards to write by hand.",
       "action": "Paste an answer"
-    },
-    "paste": {
-      "title": "Nothing pasted yet",
-      "body": "Take the prompt from step one, let the AI pull the terms out of your material, and paste the whole answer here.",
-      "action": "Open the prompt"
     }
   },
   "status": {
@@ -84,5 +79,41 @@
     },
     "text": "Make flashcards out of the study material below.\n\nFormat - every card on exactly two lines, one blank line between cards:\n\nTERM: <the term or name>\nMEANING: <one sentence of explanation>\n\nRules:\n- Use only what is in the material. Do not invent anything.\n- Keep dates, numbers and names exactly as they appear in the material.\n- A term appears on one card only.\n- A meaning fits on one line and stays under 200 characters.\n- No heading, no introduction, no numbering, no summary. Start with the first card.\n- Skip the parts of the material that hold nothing worth memorising.\n\nStudy material:\n<paste your material here>",
     "jsonText": "Make flashcards out of the study material below.\n\nAnswer with a JSON array only, with no explanation around it:\n\n[\n  { \"term\": \"<the term or name>\", \"meaning\": \"<one sentence of explanation>\" }\n]\n\nRules:\n- Use only what is in the material. Do not invent anything.\n- Keep dates, numbers and names exactly as they appear in the material.\n- A term appears on one card only.\n- \"meaning\" is one sentence, under 200 characters.\n- No other fields and no comments.\n- Skip the parts of the material that hold nothing worth memorising.\n\nStudy material:\n<paste your material here>"
+  },
+  "paste": {
+    "title": "Paste the AI answer",
+    "lede": "Paste the whole answer exactly as it came back. You see the cards before anything is saved.",
+    "label": "The AI answer",
+    "placeholder": "TERM: Reformation\nMEANING: A 16th-century movement that split the western church.\n\nTERM: Martin Luther\nMEANING: A German monk who published 95 theses in 1517.",
+    "read": "Read the cards",
+    "sampleAction": "Try a sample answer",
+    "clear": "Clear",
+    "found_one": "Found {count} card",
+    "found_other": "Found {count} cards",
+    "dropped_one": "{count} half-written card was left out",
+    "dropped_other": "{count} half-written cards were left out",
+    "previewLabel": "The cards before saving",
+    "nameLabel": "Deck name",
+    "defaultName": "Deck {date}",
+    "save": "Save the deck",
+    "saving": "Saving…",
+    "restart": "Start again",
+    "sample": "Sure! Here are the cards from your material.\n\n1. **TERM:** Hanseatic League\n   **MEANING:** A union of northern European trading towns that controlled Baltic trade routes.\n\n2. **TERM:** St George's Night Uprising\n   **MEANING:** A rebellion by Estonians in northern Estonia that began in 1343.\n\n3. **TERM:** Livonian War\n   **MEANING:** A war over Old Livonia fought between 1558 and 1583.\n\n4. **TERM:** Peace of Augsburg\n   **MEANING:** A 1555 settlement letting each prince choose the religion of his land.\n\nHope this helps!",
+    "problem": {
+      "empty": "Paste an answer first.",
+      "noCardsTitle": "No cards found",
+      "noCardsBody": "The answer should have TERM: and MEANING: lines (or MÕISTE: and TÄHENDUS:). Ask the model again with the prompt, or try the JSON variant in step one.",
+      "nameRequired": "Give the deck a name."
+    }
+  },
+  "apiError": {
+    "offline": "No connection. Check your internet and try again.",
+    "unauthorized": "You have to sign in for this.",
+    "notFound": "That is not there any more.",
+    "invalidInput": "The server would not take this. Check the cards and the deck name.",
+    "tooLarge": "Too much at once. Split the answer into two decks.",
+    "rateLimited": "Too many tries in a row. Wait a moment and try again.",
+    "server": "Something went wrong on the server. Try again.",
+    "unknown": "Something went wrong. Try again."
   }
 }
