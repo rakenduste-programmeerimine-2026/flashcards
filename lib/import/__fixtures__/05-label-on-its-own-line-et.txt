@@ -1,0 +1,11 @@
+Kaardid:
+
+MÕISTE:
+Fotosüntees
+TÄHENDUS:
+Protsess, mille käigus taim seob valguse abil süsihappegaasi ja vee suhkruks.
+
+MÕISTE:
+Kloroplast
+TÄHENDUS:
+Rakuorganell, milles fotosüntees toimub.
