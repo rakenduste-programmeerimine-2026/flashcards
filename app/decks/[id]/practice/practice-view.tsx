@@ -37,6 +37,10 @@ export function PracticeView({ deckId }: { deckId: string }) {
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [ratings, setRatings] = useState<Rating[]>([]);
+  /** The cards rated "did not know" in this round: the next round, if there is one. */
+  const [missedCards, setMissedCards] = useState<DeckCard[]>([]);
+  /** 1 is the whole deck; 2 and up are repeat rounds over what was missed. */
+  const [round, setRound] = useState(1);
   /** Short confirmation after a reshuffle, cleared again so it does not linger. */
   const [notice, setNotice] = useState<string | null>(null);
   const cardRef = useRef<HTMLElement>(null);
@@ -54,6 +58,8 @@ export function PracticeView({ deckId }: { deckId: string }) {
       setIndex(0);
       setRevealed(false);
       setRatings([]);
+      setMissedCards([]);
+      setRound(1);
       setStatus("ready");
     } catch (error) {
       setProblem(t(apiErrorKey(error)));
@@ -68,15 +74,32 @@ export function PracticeView({ deckId }: { deckId: string }) {
   const total = cards.length;
   const card = cards[index];
   const finished = status === "ready" && total > 0 && index >= total;
-  const knew = ratings.filter((rating) => rating === "knew").length;
-  const missed = ratings.length - knew;
+  const missed = missedCards.length;
+  const knew = ratings.length - missed;
 
-  const rate = useCallback((rating: Rating) => {
-    setRatings((current) => [...current, rating]);
-    setIndex((current) => current + 1);
+  const rate = useCallback(
+    (rating: Rating) => {
+      setRatings((current) => [...current, rating]);
+      if (rating === "missed" && card) {
+        setMissedCards((current) => [...current, card]);
+      }
+      setIndex((current) => current + 1);
+      setRevealed(false);
+      setNotice(null);
+    },
+    [card],
+  );
+
+  /** A second pass over the cards that were missed: the useful half of practice. */
+  const repeatMissed = useCallback(() => {
+    setCards(readShufflePreference() ? shuffle(missedCards) : [...missedCards]);
+    setIndex(0);
     setRevealed(false);
+    setRatings([]);
+    setMissedCards([]);
+    setRound((current) => current + 1);
     setNotice(null);
-  }, []);
+  }, [missedCards]);
 
   /** Only what is still ahead moves. The card on screen stays, and a card that has
       already been rated cannot come back in this round. */
@@ -101,6 +124,8 @@ export function PracticeView({ deckId }: { deckId: string }) {
     setIndex(0);
     setRevealed(false);
     setRatings([]);
+    setMissedCards([]);
+    setRound(1);
     setNotice(null);
   }, [stored]);
 
@@ -178,15 +203,37 @@ export function PracticeView({ deckId }: { deckId: string }) {
   }
 
   if (finished) {
+    const perfect = missed === 0;
+
     return (
       <div className={styles.done}>
         <p className="label">{deck?.name}</p>
-        <h1>{t("practice.done.title")}</h1>
+        <h1>
+          {perfect ? t("practice.done.perfectTitle") : t("practice.done.title")}
+        </h1>
+
+        {/* knew + missed is always the size of the round, so the two numbers on
+            this screen cannot contradict each other. */}
         <p className={styles.score}>
           {t("practice.done.score", { knew, total })}
         </p>
+
+        {perfect ? (
+          <p className={styles.score}>{t("practice.done.perfectBody")}</p>
+        ) : (
+          <p className={`label ${styles.needWork}`}>
+            {t("practice.done.needWork", { count: missed })}
+          </p>
+        )}
+
         <div className={styles.actions}>
-          <Button variant="primary" onClick={restart}>
+          {/* A perfect round gets no repeat button rather than an empty one. */}
+          {perfect ? null : (
+            <Button variant="primary" onClick={repeatMissed}>
+              {t("practice.done.repeat", { count: missed })}
+            </Button>
+          )}
+          <Button variant={perfect ? "primary" : "quiet"} onClick={restart}>
             {t("practice.done.again")}
           </Button>
           <ButtonLink href="/decks">{t("practice.done.back")}</ButtonLink>
@@ -200,6 +247,11 @@ export function PracticeView({ deckId }: { deckId: string }) {
       <header className={styles.head}>
         <p className={`label ${styles.deckName}`}>{deck?.name}</p>
         <p className="label tabular">
+          {round > 1 ? (
+            <span className={styles.repeatRound}>
+              {t("practice.repeatRound")}{" "}
+            </span>
+          ) : null}
           {t("practice.position", { current: index + 1, total })}
         </p>
       </header>

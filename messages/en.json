@@ -135,6 +135,7 @@
   },
   "practice": {
     "position": "{current} / {total}",
+    "repeatRound": "Repeat round",
     "hidden": "The meaning is hidden",
     "reveal": "Show the meaning",
     "knew": "I knew it",
@@ -155,7 +156,13 @@
     "done": {
       "title": "Round finished",
       "score": "You knew {knew} cards out of {total}",
-      "again": "Start again",
+      "needWork_one": "{count} card still needs work",
+      "needWork_other": "{count} cards still need work",
+      "repeat_one": "Practise that {count} card again",
+      "repeat_other": "Practise those {count} cards again",
+      "perfectTitle": "All correct",
+      "perfectBody": "The whole round is known. There is nothing left to repeat.",
+      "again": "Start the deck again",
       "back": "Back to the decks"
     },
     "empty": {
