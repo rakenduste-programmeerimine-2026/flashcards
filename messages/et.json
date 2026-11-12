@@ -115,5 +115,21 @@
     "rateLimited": "Liiga palju katseid järjest. Oota hetk ja proovi uuesti.",
     "server": "Serveris läks midagi valesti. Proovi uuesti.",
     "unknown": "Midagi läks valesti. Proovi uuesti."
+  },
+  "decks": {
+    "title": "Minu kaardipakid",
+    "lede": "Vali pakk ja alusta harjutamist. Kaarte saab enne üle vaadata ja parandada.",
+    "practise": "Harjuta",
+    "edit": "Muuda",
+    "delete": "Kustuta",
+    "justSaved": "Äsja salvestatud",
+    "updated": "Muudetud {date}",
+    "confirm": {
+      "question": "Kustutada pakk „{name}“?",
+      "body": "Kaardid kustuvad koos pakiga. Seda ei saa tagasi võtta.",
+      "yes": "Kustuta pakk",
+      "cancel": "Jäta alles",
+      "deleting": "Kustutan…"
+    }
   }
 }
