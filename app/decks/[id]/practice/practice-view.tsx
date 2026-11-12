@@ -7,6 +7,8 @@ import { ErrorState } from "@/components/ui/error-state";
 import { LoadingRows } from "@/components/ui/loading-rows";
 import { apiErrorKey } from "@/lib/api/errors";
 import { getDeck, type DeckCard, type DeckSummary } from "@/lib/api/decks";
+import { readShufflePreference } from "@/lib/practice/preference";
+import { shuffle } from "@/lib/practice/shuffle";
 import { useT } from "@/lib/i18n";
 import styles from "./practice.module.css";
 
@@ -27,6 +29,9 @@ export function PracticeView({ deckId }: { deckId: string }) {
   const [status, setStatus] = useState<Status>("loading");
   const [problem, setProblem] = useState<string | null>(null);
   const [deck, setDeck] = useState<DeckSummary | null>(null);
+  /** The deck in its stored order. Never reordered, only read from. */
+  const [stored, setStored] = useState<DeckCard[]>([]);
+  /** The order of this round. */
   const [cards, setCards] = useState<DeckCard[]>([]);
 
   const [index, setIndex] = useState(0);
@@ -39,7 +44,10 @@ export function PracticeView({ deckId }: { deckId: string }) {
     try {
       const detail = await getDeck(deckId);
       setDeck(detail.deck);
-      setCards(detail.cards);
+      setStored(detail.cards);
+      // Read here rather than in an effect: by now we are on the client, and the
+      // first card the student sees is already the right one.
+      setCards(readShufflePreference() ? shuffle(detail.cards) : detail.cards);
       setIndex(0);
       setRevealed(false);
       setRatings([]);
@@ -67,10 +75,19 @@ export function PracticeView({ deckId }: { deckId: string }) {
   }, []);
 
   const restart = useCallback(() => {
+    // A second run through the same deck is shuffled again, or the toggle would
+    // only mean "shuffled once".
+    setCards((current) =>
+      readShufflePreference()
+        ? shuffle(stored)
+        : stored.length
+          ? stored
+          : current,
+    );
     setIndex(0);
     setRevealed(false);
     setRatings([]);
-  }, []);
+  }, [stored]);
 
   // Space reveals, the arrows rate. A full round is doable without a mouse.
   useEffect(() => {

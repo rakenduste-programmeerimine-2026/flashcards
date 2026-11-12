@@ -116,3 +116,48 @@
   color: var(--color-muted);
   font-size: var(--text-sm);
 }
+
+/* --- shuffle toggle --- */
+.shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  margin-left: calc(var(--space-2) * -1);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+}
+
+.shuffleTrack {
+  display: block;
+  width: 2.25rem;
+  height: 1.25rem;
+  padding: 2px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+}
+
+.shuffleKnob {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-muted);
+  transition: transform 140ms ease-out;
+}
+
+.shuffle[aria-checked="true"] .shuffleTrack {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+}
+
+.shuffle[aria-checked="true"] .shuffleKnob {
+  background: var(--color-accent);
+  transform: translateX(1rem);
+}
+
+.shuffle[aria-checked="true"] .label {
+  color: var(--color-ink);
+}
