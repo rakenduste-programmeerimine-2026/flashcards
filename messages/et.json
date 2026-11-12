@@ -3,6 +3,11 @@
     "name": "Flashcards",
     "tagline": "AI vastusest kaardipakk, mida saab kohe harjutada"
   },
+  "language": {
+    "label": "Keel",
+    "et": "Eesti keel",
+    "en": "Inglise keel"
+  },
   "nav": {
     "aria": "Kolm sammu",
     "skip": "Liigu sisu juurde",

@@ -3,6 +3,11 @@
     "name": "Flashcards",
     "tagline": "An AI answer, turned into a deck you can practise"
   },
+  "language": {
+    "label": "Language",
+    "et": "Estonian",
+    "en": "English"
+  },
   "nav": {
     "aria": "Three steps",
     "skip": "Skip to content",
