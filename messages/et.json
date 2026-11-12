@@ -119,6 +119,7 @@
   "decks": {
     "title": "Minu kaardipakid",
     "lede": "Vali pakk ja alusta harjutamist. Kaarte saab enne üle vaadata ja parandada.",
+    "shuffle": "Sega kaardid",
     "practise": "Harjuta",
     "edit": "Muuda",
     "delete": "Kustuta",
