@@ -139,6 +139,8 @@
     "reveal": "Näita tähendust",
     "knew": "Teadsin",
     "missed": "Ei teadnud",
+    "reshuffle": "Sega ülejäänud",
+    "reshuffled": "Ülejäänud kaardid said uue järjekorra",
     "leave": "Lõpeta",
     "counts": {
       "knew": "Teadsin {count}",
