@@ -1,0 +1,67 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  /* 44px minimum tap target at the default font size. */
+  min-height: 2.75rem;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color 120ms ease-out,
+    border-color 120ms ease-out;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quiet:hover:not(:disabled) {
+  background: var(--color-surface-2);
+}
+
+.primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.primary:hover:not(:disabled) {
+  /* Darken in light mode, lighten in dark: one rule, both themes. */
+  background: color-mix(in srgb, var(--color-accent) 88%, var(--color-ink));
+}
+
+.good {
+  border-color: var(--color-good);
+  color: var(--color-good);
+}
+
+.good:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-good) 10%, var(--color-surface));
+}
+
+.bad {
+  border-color: var(--color-bad);
+  color: var(--color-bad);
+}
+
+.bad:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-bad) 10%, var(--color-surface));
+}
+
+.danger {
+  background: var(--color-bad);
+  border-color: var(--color-bad);
+  color: var(--color-surface);
+}
+
+.danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-bad) 88%, var(--color-ink));
+}
