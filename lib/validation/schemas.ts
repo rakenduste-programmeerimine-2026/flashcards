@@ -26,6 +26,12 @@ const cardFields = {
 
 const cardSchema = z.object(cardFields);
 
+/** Where a card sits in its deck, counted from 0. The repository keeps positions gapless. */
+const position = z
+  .number({ error: typeError })
+  .int("invalid_value")
+  .min(0, "invalid_value");
+
 export const createDeckSchema = z.object({
   name: deckName,
   language: z.enum(LANGUAGES, { error: typeError }),
@@ -37,16 +43,25 @@ export const createDeckSchema = z.object({
 
 export const renameDeckSchema = z.object({ name: deckName });
 
-export const createCardSchema = cardSchema;
+/** A card added in the editor. Without a position it goes to the end. */
+export const createCardSchema = z.object({
+  ...cardFields,
+  position: position.optional(),
+});
 
 export const updateCardSchema = z
   .object({
     term: cardFields.term.optional(),
     meaning: cardFields.meaning.optional(),
+    position: position.optional(),
   })
-  .refine((value) => value.term !== undefined || value.meaning !== undefined, {
-    message: "required",
-  });
+  .refine(
+    (value) =>
+      value.term !== undefined ||
+      value.meaning !== undefined ||
+      value.position !== undefined,
+    { message: "required" },
+  );
 
 export type CreateDeckInput = z.infer<typeof createDeckSchema>;
 export type RenameDeckInput = z.infer<typeof renameDeckSchema>;
