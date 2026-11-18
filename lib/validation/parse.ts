@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import type { z } from "zod";
+import { apiError } from "@/lib/api/server-errors";
+import { LIMITS } from "./limits";
 import type { ValidationCode } from "./schemas";
 
 const CODES: readonly string[] = [
@@ -40,14 +42,66 @@ export function invalidInput(
 type ParseResult<T> =
   { ok: true; data: T } | { ok: false; response: NextResponse };
 
-/** Validates a JSON body. Use it like requireUser(): `if (!parsed.ok) return parsed.response;`. */
+/**
+ * The body as text, or null as soon as it goes over `maxBytes`. The declared
+ * Content-Length is checked first, but it can be missing or wrong, so the bytes
+ * actually received are counted too and reading stops at the limit.
+ */
+async function readLimitedText(request: Request, maxBytes: number) {
+  const declared = Number(request.headers.get("content-length"));
+  if (Number.isFinite(declared) && declared > maxBytes) {
+    return null;
+  }
+
+  if (!request.body) {
+    return "";
+  }
+
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let received = 0;
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) {
+      break;
+    }
+    received += value.byteLength;
+    if (received > maxBytes) {
+      await reader.cancel().catch(() => undefined);
+      return null;
+    }
+    chunks.push(value);
+  }
+
+  return new TextDecoder().decode(Buffer.concat(chunks));
+}
+
+/**
+ * Validates a JSON body. Use it like requireUser(): `if (!parsed.ok) return parsed.response;`.
+ * A body over `maxBytes` (default `LIMITS.bodyMaxBytes`) is `413 too_large` and is not parsed.
+ */
 export async function parseBody<T extends z.ZodType>(
   request: Request,
   schema: T,
+  options: { maxBytes?: number } = {},
 ): Promise<ParseResult<z.infer<T>>> {
-  const body: unknown = await request.json().catch(() => undefined);
-  const result = schema.safeParse(body);
+  const text = await readLimitedText(
+    request,
+    options.maxBytes ?? LIMITS.bodyMaxBytes,
+  );
+  if (text === null) {
+    return { ok: false, response: apiError("too_large") };
+  }
 
+  let body: unknown;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    body = undefined;
+  }
+
+  const result = schema.safeParse(body);
   if (!result.success) {
     return { ok: false, response: invalidInput(toFields(result.error)) };
   }
