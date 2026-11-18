@@ -100,3 +100,30 @@ A full practice round needs no mouse:
 | Tab          | Moves through the controls in reading order |
 
 The keys are shown under the buttons during practice, so they do not have to be discovered here.
+
+## Database policies — 18 November (issues #7 and #20)
+
+`supabase/tests/rls.test.ts` runs the migration against a real Postgres and checks, as two
+different signed-in users and as an anonymous visitor:
+
+- a deck is created with all of its cards in order, or not at all when one card is invalid;
+- one user cannot read, rename, delete or add cards to another user's deck, directly or
+  through the functions, and cannot create a deck in somebody else's name;
+- an anonymous visitor cannot read the tables or call the functions;
+- the deck and card limits raise `deck_limit_reached` and `card_limit_reached`;
+- positions stay gapless (0..n-1) after adding, moving and deleting cards;
+- deleting a deck deletes its cards.
+
+Run it against the local Supabase stack, or any empty Postgres (the shim in
+`supabase/tests/supabase-shim.sql` adds `auth.users`, `auth.uid()` and the two roles):
+
+```bash
+npx supabase start
+DATABASE_TEST_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres npm run test:db
+```
+
+Without `DATABASE_TEST_URL` the suite is skipped, so `npm test` still runs offline.
+
+**Result, 18 November:** 11 of 11 passed on PostgreSQL 16. The first run found a real bug:
+`jsonb_to_recordset ... with ordinality` is not allowed with a column list, so creating a deck
+failed. Fixed in the migration before it was opened for review.
