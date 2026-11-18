@@ -10,6 +10,7 @@ import { LoadingRows } from "@/components/ui/loading-rows";
 import { apiErrorKey } from "@/lib/api/errors";
 import { deleteDeck, listDecks, type DeckSummary } from "@/lib/api/decks";
 import { useLocale, useT } from "@/lib/i18n";
+import { ShuffleToggle } from "./shuffle-toggle";
 import styles from "./decks.module.css";
 
 type Status = "loading" | "ready" | "failed";
@@ -114,6 +115,8 @@ export function DecksView() {
           {problem}
         </p>
       ) : null}
+
+      <ShuffleToggle />
 
       <ul className={styles.list}>
         {decks.map((deck) => {

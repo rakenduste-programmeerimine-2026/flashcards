@@ -119,6 +119,7 @@
   "decks": {
     "title": "My decks",
     "lede": "Pick a deck and start practising. You can look the cards over and fix them first.",
+    "shuffle": "Shuffle the cards",
     "practise": "Practise",
     "edit": "Edit",
     "delete": "Delete",
