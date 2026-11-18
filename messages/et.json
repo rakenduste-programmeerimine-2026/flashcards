@@ -135,6 +135,7 @@
   },
   "practice": {
     "position": "{current} / {total}",
+    "repeatRound": "Kordusring",
     "hidden": "Tähendus on peidetud",
     "reveal": "Näita tähendust",
     "knew": "Teadsin",
@@ -155,7 +156,13 @@
     "done": {
       "title": "Ring läbi",
       "score": "Teadsid {knew} kaarti {total}-st",
-      "again": "Alusta otsast",
+      "needWork_one": "{count} kaart vajab veel kordamist",
+      "needWork_other": "{count} kaarti vajavad veel kordamist",
+      "repeat_one": "Korda seda {count} kaarti",
+      "repeat_other": "Korda neid {count} kaarti",
+      "perfectTitle": "Kõik õigesti",
+      "perfectBody": "Terve ring sai selgeks. Rohkem korrata pole midagi.",
+      "again": "Alusta pakk otsast",
       "back": "Tagasi pakkide juurde"
     },
     "empty": {
