@@ -64,7 +64,7 @@ async function terms(deckId: string) {
 }
 
 describe.skipIf(!url)(
-  "database: tables, policies and functions (#7, #20)",
+  "database: tables, policies and functions (#7, #20, #28)",
   () => {
     beforeAll(async () => {
       db = new Client({ connectionString: url });
@@ -309,6 +309,66 @@ describe.skipIf(!url)(
       const id = await createDeck(4);
       await db.query("delete from public.decks where id = $1", [id]);
       expect(await terms(id)).toEqual([]);
+    });
+
+    it("records practice ratings, also for the same card twice", async () => {
+      await as(alice);
+      const id = await createDeck(2);
+      const { rows: cards } = await db.query(
+        "select id from public.cards where deck_id = $1 order by position",
+        [id],
+      );
+      const ratings = [
+        { cardId: cards[0].id, knew: true },
+        { cardId: cards[0].id, knew: false },
+        { cardId: cards[1].id, knew: true },
+      ];
+      const { rows } = await db.query(
+        "select public.record_ratings($1::jsonb) as n",
+        [JSON.stringify(ratings)],
+      );
+      expect(rows[0].n).toBe(3);
+
+      const { rows: stats } = await db.query(
+        "select times_seen, times_known, last_practiced_at is not null as practised from public.cards where deck_id = $1 order by position",
+        [id],
+      );
+      expect(stats).toEqual([
+        { times_seen: 2, times_known: 1, practised: true },
+        { times_seen: 1, times_known: 1, practised: true },
+      ]);
+    });
+
+    it("records no ratings when one card is somebody else's", async () => {
+      await as(alice);
+      const aliceDeck = await createDeck(1);
+      const { rows: aliceCards } = await db.query(
+        "select id from public.cards where deck_id = $1",
+        [aliceDeck],
+      );
+
+      await as(bob);
+      const bobDeck = await createDeck(1, "Bob");
+      const { rows: bobCards } = await db.query(
+        "select id from public.cards where deck_id = $1",
+        [bobDeck],
+      );
+      const { rows } = await db.query(
+        "select public.record_ratings($1::jsonb) as n",
+        [
+          JSON.stringify([
+            { cardId: bobCards[0].id, knew: true },
+            { cardId: aliceCards[0].id, knew: true },
+          ]),
+        ],
+      );
+      expect(rows[0].n).toBeNull();
+
+      await asAdmin();
+      const { rows: seen } = await db.query(
+        "select sum(times_seen)::int as n from public.cards",
+      );
+      expect(seen[0].n).toBe(0);
     });
   },
 );
