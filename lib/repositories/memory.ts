@@ -1,5 +1,10 @@
 import { randomUUID } from "node:crypto";
-import type { CreateDeckData, Repositories } from "./types";
+import type {
+  CreateDeckData,
+  DeckDetail,
+  DeckSummary,
+  Repositories,
+} from "./types";
 
 /**
  * An in-memory stand-in for the database, for unit tests of the handlers. It keeps the
@@ -39,8 +44,75 @@ export class MemoryStore {
     return {
       decks: {
         createDeckWithCards: async (data) => this.createDeckWithCards(data),
+        listDecks: async (ownerId) => this.listDecks(ownerId),
+        getDeck: async (ownerId, deckId) => this.getDeck(ownerId, deckId),
+        renameDeck: async (ownerId, deckId, name) =>
+          this.renameDeck(ownerId, deckId, name),
+        deleteDeck: async (ownerId, deckId) => this.deleteDeck(ownerId, deckId),
       },
     };
+  }
+
+  private owned(ownerId: string, deckId: string) {
+    return this.decks.find(
+      (deck) => deck.id === deckId && deck.ownerId === ownerId,
+    );
+  }
+
+  private summary(deck: StoredDeck): DeckSummary {
+    return {
+      id: deck.id,
+      name: deck.name,
+      language: deck.language,
+      cardCount: this.cards.filter((card) => card.deckId === deck.id).length,
+      createdAt: deck.createdAt,
+      updatedAt: deck.updatedAt,
+    };
+  }
+
+  private listDecks(ownerId: string) {
+    return this.decks
+      .filter((deck) => deck.ownerId === ownerId)
+      .map((deck) => this.summary(deck))
+      .reverse() // later inserts first, so equal timestamps still come out newest first
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }
+
+  private getDeck(ownerId: string, deckId: string): DeckDetail | null {
+    const deck = this.owned(ownerId, deckId);
+    if (!deck) {
+      return null;
+    }
+    const cards = this.cards
+      .filter((card) => card.deckId === deck.id)
+      .sort((a, b) => a.position - b.position)
+      .map(({ id, term, meaning, position }) => ({
+        id,
+        term,
+        meaning,
+        position,
+      }));
+    return { deck: this.summary(deck), cards };
+  }
+
+  private renameDeck(ownerId: string, deckId: string, name: string) {
+    const deck = this.owned(ownerId, deckId);
+    if (!deck) {
+      return null;
+    }
+    deck.name = name;
+    deck.updatedAt = new Date().toISOString();
+    return this.summary(deck);
+  }
+
+  private deleteDeck(ownerId: string, deckId: string) {
+    const deck = this.owned(ownerId, deckId);
+    if (!deck) {
+      return false;
+    }
+    this.decks = this.decks.filter((d) => d.id !== deck.id);
+    this.cards = this.cards.filter((card) => card.deckId !== deck.id); // cascade
+    return true;
   }
 
   private createDeckWithCards(data: CreateDeckData) {
