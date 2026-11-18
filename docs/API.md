@@ -73,3 +73,43 @@ the cards keep their order as positions `0, 1, 2, ...`.
 | 401    | `unauthorized`        | No session, nothing saved                      |
 | 500    | `server_error`        | The write failed, nothing saved                |
 | 503    | `storage_unavailable` | The database is not connected                  |
+
+## `GET /api/decks`
+
+The signed-in user's decks, newest first, each with its card count.
+
+```json
+{
+  "decks": [
+    {
+      "id": "uuid",
+      "name": "History",
+      "language": "en",
+      "cardCount": 40,
+      "createdAt": "2026-11-18T10:00:00.000Z",
+      "updatedAt": "2026-11-18T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+## `GET /api/decks/:id`
+
+`200` with `{ "deck": <summary>, "cards": [{ "id", "term", "meaning", "position" }] }`, cards
+ordered by position. The editor and the practice screen load a deck with this. It is not in the
+issue list, but the frontend already calls it.
+
+## `PATCH /api/decks/:id`
+
+Body `{ "name": "New name" }`, validated like the name on create. `200` with the updated deck
+summary.
+
+## `DELETE /api/decks/:id`
+
+Deletes the deck and its cards. `204` with no body.
+
+## Ownership
+
+All three `:id` routes check the owner. A deck that does not exist and a deck that belongs to
+someone else both answer `404 not_found`, so an id is never confirmed. Nothing is changed or
+deleted in that case. Without a session every route answers `401 unauthorized`.
