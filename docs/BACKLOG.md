@@ -24,15 +24,45 @@ Working rules:
 
 ## Role split
 
-| Role               | Issues | Owner     |
-| ------------------ | ------ | --------- |
-| Frontend & UX      | 17     | _fill in_ |
-| Backend & security | 7      | _fill in_ |
-| Database & quality | 8      | _fill in_ |
-| Whole team         | 5      | shared    |
+| Role               | Issues | Owner       |
+| ------------------ | ------ | ----------- |
+| Frontend & UX      | 17     | Kristo Kukk |
+| Backend & security | 7      | _fill in_   |
+| Database & quality | 8      | _fill in_   |
+| Whole team         | 5      | shared      |
 
 Frontend carries the most work, which is expected for this product: the value is in the
 screens. The two `prio: should` frontend items are the ones that move first if a cycle slips.
+
+## Where things stand — 18 November
+
+**The frontend lane is finished.** Every `role: frontend` issue is closed and squash-merged into
+`main`, which builds clean: `lint`, `typecheck`, the i18n parity check, the contrast check and the
+37 unit tests all pass.
+
+| Cycle | Frontend issues              | Pull requests                |
+| ----- | ---------------------------- | ---------------------------- |
+| 1     | #2, #4, #5, #6               | #41, #42, #45, #46           |
+| 2     | #10, #11, #12, #13, #14, #19 | #47, #48, #49, #50, #51, #52 |
+| 3     | #22, #23, #24, #25, #26, #30 | #53, #54, #55, #56, #57, #58 |
+| 4     | #32                          | #59                          |
+
+Two notes on how that landed, so the history reads honestly:
+
+- The branches were **stacked** — each one branched from the previous rather than from `main`, so
+  they merged bottom-up in issue order. Squashing each one meant the next branch had to take
+  `main` back in before it could merge; those merge commits are in the history under
+  `chore(merge):`. Branch from an up-to-date `main` instead, as `CONTRIBUTING.md` says.
+- `app/home-view.tsx` survived the stack unused and broke the build on `main`. Fixed in #60 / #61.
+
+**Open, and not frontend:**
+
+- [#44](../../../pulls/44) `feat(auth)` is open and waiting for a review — it is the one pull
+  request in the repository that is not frontend work.
+- Backend: #15, #16, #17, #27, #29, #31. Database: #3, #7, #9, #18, #20, #28, #33, #34, #39.
+  Team: #21, #35, #36, #37, #40.
+- Nothing in Cycle 4 that depends on the screens is blocked any more: the user test (#35), the
+  deployment (#33) and the journey checklist (#34) can all run against `main` as it is.
 
 ## Cycle 1 — Foundation
 
