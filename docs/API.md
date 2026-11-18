@@ -141,3 +141,32 @@ Any of `term`, `meaning` and `position`, at least one. `200` with the updated ca
 ### `DELETE /api/cards/:id`
 
 `204` with no body.
+
+# Practice results
+
+## `POST /api/practice/ratings`
+
+Records how a practice session went. The frontend does not call it yet; the shape below is the
+agreed contract. Send ratings in batches, for example when a round ends or every few cards, not
+one request per card.
+
+```json
+{
+  "ratings": [
+    { "cardId": "uuid", "knew": true },
+    { "cardId": "uuid", "knew": false }
+  ]
+}
+```
+
+`200` with `{ "recorded": 2 }`. Each rating adds 1 to "times seen", adds 1 to "times known" when
+`knew` is true and sets "last practised". The same card may appear more than once. At most 500
+ratings per request.
+
+Every card is checked through its parent deck's owner. If any card does not exist or belongs to
+someone else the whole batch answers `404 not_found` and nothing is recorded. `400 invalid_input`
+names the failing rating, for example `ratings.1.knew`. Without a session: `401 unauthorized`.
+
+A failed request should not interrupt practice: keep the ratings and send them with the next
+batch, or drop them. The storage for the counters is #28; until it exists the route answers
+`503 storage_unavailable`.
