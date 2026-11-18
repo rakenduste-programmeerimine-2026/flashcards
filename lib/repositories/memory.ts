@@ -5,6 +5,7 @@ import type {
   DeckCard,
   DeckDetail,
   DeckSummary,
+  CardRating,
   NewDeckCard,
   Repositories,
 } from "./types";
@@ -40,6 +41,11 @@ export type MemoryOptions = {
 export class MemoryStore {
   decks: StoredDeck[] = [];
   cards: StoredCard[] = [];
+  /** Practice results by card id. */
+  practice = new Map<
+    string,
+    { timesSeen: number; timesKnown: number; lastPracticedAt: string }
+  >();
 
   constructor(readonly options: MemoryOptions = {}) {}
 
@@ -60,7 +66,31 @@ export class MemoryStore {
           this.updateCard(ownerId, cardId, changes),
         deleteCard: async (ownerId, cardId) => this.deleteCard(ownerId, cardId),
       },
+      practice: {
+        recordRatings: async (ownerId, ratings) =>
+          this.recordRatings(ownerId, ratings),
+      },
     };
+  }
+
+  private recordRatings(ownerId: string, ratings: CardRating[]) {
+    // Check every card first, so a foreign one means nothing is written at all.
+    if (ratings.some((r) => !this.ownedCard(ownerId, r.cardId))) {
+      return null;
+    }
+    const now = new Date().toISOString();
+    for (const { cardId, knew } of ratings) {
+      const stats = this.practice.get(cardId) ?? {
+        timesSeen: 0,
+        timesKnown: 0,
+        lastPracticedAt: now,
+      };
+      stats.timesSeen += 1;
+      if (knew) stats.timesKnown += 1;
+      stats.lastPracticedAt = now;
+      this.practice.set(cardId, stats);
+    }
+    return { recorded: ratings.length };
   }
 
   /** The card, if its parent deck is the owner's. */

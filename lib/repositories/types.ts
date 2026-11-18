@@ -95,9 +95,29 @@ export interface CardRepository {
   deleteCard(ownerId: string, cardId: string): Promise<boolean>;
 }
 
+export type CardRating = { cardId: string; knew: boolean };
+
+/**
+ * Practice results per card (#28 owns the storage): times seen, times known and when
+ * the card was last practised.
+ */
+export interface PracticeRepository {
+  /**
+   * Records the ratings: each one adds 1 to "seen", adds 1 to "known" if the card was
+   * known, and sets "last practised". All or nothing: if any card is missing or in
+   * somebody else's deck, nothing is written and the result is null. Returns the
+   * number of ratings recorded.
+   */
+  recordRatings(
+    ownerId: string,
+    ratings: CardRating[],
+  ): Promise<{ recorded: number } | null>;
+}
+
 export type Repositories = {
   decks: DeckRepository;
   cards: CardRepository;
+  practice: PracticeRepository;
 };
 
 /** The storage cannot be reached or has not been connected yet. Handlers answer 503. */
