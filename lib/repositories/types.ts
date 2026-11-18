@@ -2,7 +2,7 @@
  * Data access for decks and cards, as an interface.
  *
  * Route handlers only know these types. The tables behind them belong to #7, so the
- * real adapter (`supabase.ts`) is a stub until they exist, and tests run against the
+ * real adapter is `supabase.ts`, and the handler tests run against the
  * in-memory implementation in `memory.ts`.
  *
  * Every method takes the owner's id. Something that is missing and something that
