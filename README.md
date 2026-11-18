@@ -38,21 +38,21 @@ Both languages, Estonian and English, are available across the whole interface.
 
 ## Stack
 
-| Layer | Choice |
-| --- | --- |
-| Frontend | Next.js (App Router), TypeScript |
-| Backend | Next.js route handlers |
+| Layer             | Choice                                      |
+| ----------------- | ------------------------------------------- |
+| Frontend          | Next.js (App Router), TypeScript            |
+| Backend           | Next.js route handlers                      |
 | Database and auth | Supabase (Postgres with row level security) |
-| Hosting | Vercel |
+| Hosting           | Vercel                                      |
 
 ## Team and roles
 
 One person per role for Project 1.
 
-| Role | Responsibility | Member |
-| --- | --- | --- |
-| Frontend & UX | Pages, components, styling, wiring the UI to the API | _fill in_ |
-| Backend & security | Route handlers, logic, validation, access checks | _fill in_ |
+| Role               | Responsibility                                           | Member    |
+| ------------------ | -------------------------------------------------------- | --------- |
+| Frontend & UX      | Pages, components, styling, wiring the UI to the API     | _fill in_ |
+| Backend & security | Route handlers, logic, validation, access checks         | _fill in_ |
 | Database & quality | Supabase schema and policies, queries, tests, deployment | _fill in_ |
 
 ## Setup
@@ -67,15 +67,15 @@ npm run dev        # http://localhost:3000
 The database comes next: the local Supabase stack is issue #39 and the full step-by-step guide
 is issue #40 (`docs/SETUP.md`).
 
-| Script | What it does |
-| --- | --- |
-| `npm run dev` | Development server with Turbopack |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | TypeScript with no emit |
-| `npm run format` | Prettier, writes changes |
-| `npm run format:check` | Prettier, check only |
+| Script                 | What it does                      |
+| ---------------------- | --------------------------------- |
+| `npm run dev`          | Development server with Turbopack |
+| `npm run build`        | Production build                  |
+| `npm run start`        | Serve the production build        |
+| `npm run lint`         | ESLint                            |
+| `npm run typecheck`    | TypeScript with no emit           |
+| `npm run format`       | Prettier, writes changes          |
+| `npm run format:check` | Prettier, check only              |
 
 Never commit `.env.local`. `.env.example` holds placeholder values only.
 
@@ -91,11 +91,11 @@ docs/          planning, design and setup documentation
 
 ## Documentation
 
-| Document | What is in it |
-| --- | --- |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Branch names, commit format, one issue one PR, review rules |
-| [docs/BACKLOG.md](docs/BACKLOG.md) | The Kanban board and the full backlog by cycle and role |
-| [docs/TIMELINE.md](docs/TIMELINE.md) | The four cycles, the midpoint demo and the deadline |
+| Document                             | What is in it                                               |
+| ------------------------------------ | ----------------------------------------------------------- |
+| [CONTRIBUTING.md](CONTRIBUTING.md)   | Branch names, commit format, one issue one PR, review rules |
+| [docs/BACKLOG.md](docs/BACKLOG.md)   | The Kanban board and the full backlog by cycle and role     |
+| [docs/TIMELINE.md](docs/TIMELINE.md) | The four cycles, the midpoint demo and the deadline         |
 
 ## Project status
 
