@@ -1,0 +1,5 @@
+[
+  { "moiste": "Reformatsioon", "tahendus": "16. sajandi usuliikumine, mis lõhestas läänekiriku." },
+  { "moiste": "Martin Luther", "tahendus": "Saksa munk, kes avaldas 1517. aastal 95 teesi." },
+  { "moiste": "Indulgents", "tahendus": "Kirikult ostetud patukustutuskiri." }
+]

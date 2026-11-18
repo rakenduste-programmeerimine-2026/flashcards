@@ -1,0 +1,11 @@
+Sure — here are the cards as JSON:
+
+```json
+[
+  { "term": "Supply", "meaning": "The quantity of a good producers will sell at a given price." },
+  { "term": "Demand", "meaning": "The quantity of a good buyers will buy at a given price." },
+  { "term": "Equilibrium price", "meaning": "The price where supply and demand meet." }
+]
+```
+
+Let me know if you would like more.
