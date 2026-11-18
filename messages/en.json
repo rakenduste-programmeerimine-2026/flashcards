@@ -192,5 +192,12 @@
       "needCard": "A deck needs at least one card.",
       "halfCard": "Every card needs both a term and a meaning. Fill the empty fields in or remove the card."
     }
+  },
+  "meta": {
+    "description": "Turn an AI answer into a practice deck: copy the prompt, paste the answer, practise the cards.",
+    "paste": "Paste the answer",
+    "decks": "My decks",
+    "practice": "Practice",
+    "edit": "Editing the deck"
   }
 }

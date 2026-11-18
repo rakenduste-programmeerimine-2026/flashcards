@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import type { Metadata } from "next";
 import { LoadingRows } from "@/components/ui/loading-rows";
+import { titleMetadata } from "@/lib/i18n/metadata";
 import { DecksView } from "./decks-view";
 
-export const metadata: Metadata = {
-  title: "Minu pakid",
-};
+export function generateMetadata() {
+  return titleMetadata("meta.decks");
+}
 
 export default function DecksPage() {
   // DecksView reads the saved deck id out of the query string, which needs a

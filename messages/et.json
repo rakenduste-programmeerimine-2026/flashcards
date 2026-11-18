@@ -192,5 +192,12 @@
       "needCard": "Pakis peab olema vähemalt üks kaart.",
       "halfCard": "Igal kaardil peab olema nii mõiste kui tähendus. Täida tühjad väljad või eemalda kaart."
     }
+  },
+  "meta": {
+    "description": "Tee AI vastusest kaardipakk: kopeeri juhend, kleebi vastus, harjuta kaarte.",
+    "paste": "Kleebi vastus",
+    "decks": "Minu pakid",
+    "practice": "Harjutamine",
+    "edit": "Paki muutmine"
   }
 }
