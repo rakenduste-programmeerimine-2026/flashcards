@@ -5,7 +5,13 @@ import type { Dictionary } from "./dictionaries";
  * Using it as the key type means a typo in a component is a typecheck failure, not a
  * string that quietly renders as itself.
  */
-export type MessageKey = DotPaths<Dictionary>;
+export type MessageKey = DotPaths<Dictionary> | PluralKey<DotPaths<Dictionary>>;
+
+/**
+ * `card.count_one` and `card.count_other` are two entries in the file but one key
+ * in a component: `t("card.count", { count })` picks between them.
+ */
+type PluralKey<K extends string> = K extends `${infer Base}_one` ? Base : never;
 
 type DotPaths<T> = T extends string
   ? never

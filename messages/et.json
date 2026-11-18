@@ -33,11 +33,6 @@
       "title": "Ühtegi pakki veel ei ole",
       "body": "Esimene pakk tekib siis, kui kleebid teises sammus AI vastuse. Käsitsi kaarte kirjutama ei pea.",
       "action": "Kleebi vastus"
-    },
-    "paste": {
-      "title": "Siia pole veel midagi kleebitud",
-      "body": "Võta esimesest sammust juhend, lase AI-l õppematerjalist mõisted välja kirjutada ja kleebi kogu vastus siia.",
-      "action": "Ava juhend"
     }
   },
   "status": {
@@ -84,5 +79,41 @@
     },
     "text": "Koosta allolevast õppematerjalist mõistekaardid.\n\nVorming - iga kaart täpselt kahel real, kaartide vahel tühi rida:\n\nMÕISTE: <mõiste või nimi>\nTÄHENDUS: <seletus ühe lausega>\n\nReeglid:\n- Kasuta ainult materjalis olevat infot. Ära leiuta midagi juurde.\n- Jäta kuupäevad, arvud ja nimed täpselt nii, nagu need materjalis on.\n- Üks mõiste esineb ainult ühel kaardil.\n- Tähendus mahub ühele reale ja on kuni 200 tähemärki.\n- Ära lisa pealkirja, sissejuhatust, nummerdust ega kokkuvõtet. Alusta kohe esimesest kaardist.\n- Jäta vahele materjali osad, milles pole pähe õpitavat mõistet.\n\nÕppematerjal:\n<kleebi oma materjal siia>",
     "jsonText": "Koosta allolevast õppematerjalist mõistekaardid.\n\nVasta ainult JSON-massiiviga, ilma selgituste ja saatesõnata:\n\n[\n  { \"moiste\": \"<mõiste või nimi>\", \"tahendus\": \"<seletus ühe lausega>\" }\n]\n\nReeglid:\n- Kasuta ainult materjalis olevat infot. Ära leiuta midagi juurde.\n- Jäta kuupäevad, arvud ja nimed täpselt nii, nagu need materjalis on.\n- Üks mõiste esineb ainult ühel kaardil.\n- \"tahendus\" on üks lause, kuni 200 tähemärki.\n- Ära lisa muid välju ega kommentaare.\n- Jäta vahele materjali osad, milles pole pähe õpitavat mõistet.\n\nÕppematerjal:\n<kleebi oma materjal siia>"
+  },
+  "paste": {
+    "title": "Kleebi AI vastus",
+    "lede": "Kleebi kogu vastus nii, nagu see vestluses on. Kaardid näed enne, kui midagi salvestatakse.",
+    "label": "AI vastus",
+    "placeholder": "MÕISTE: Reformatsioon\nTÄHENDUS: 16. sajandi usuliikumine, mis lõhestas läänekiriku.\n\nMÕISTE: Martin Luther\nTÄHENDUS: Saksa munk, kes avaldas 1517. aastal 95 teesi.",
+    "read": "Loe kaardid välja",
+    "sampleAction": "Proovi näidisvastusega",
+    "clear": "Tühjenda",
+    "found_one": "Leidsin {count} kaardi",
+    "found_other": "Leidsin {count} kaarti",
+    "dropped_one": "{count} poolik kaart jäeti kõrvale",
+    "dropped_other": "{count} poolikut kaarti jäeti kõrvale",
+    "previewLabel": "Kaardid enne salvestamist",
+    "nameLabel": "Paki nimi",
+    "defaultName": "Kaardipakk {date}",
+    "save": "Salvesta pakk",
+    "saving": "Salvestan…",
+    "restart": "Alusta uuesti",
+    "sample": "Muidugi! Siin on sinu materjali põhjal kaardid.\n\n1. **MÕISTE:** Hansa Liit\n   **TÄHENDUS:** Põhja-Euroopa kaubalinnade ühendus, mis kontrollis Läänemere kaubateid.\n\n2. **MÕISTE:** Jüriöö ülestõus\n   **TÄHENDUS:** 1343. aastal alanud eestlaste ülestõus Põhja-Eestis.\n\n3. **MÕISTE:** Liivi sõda\n   **TÄHENDUS:** 1558-1583 peetud sõda Vana-Liivimaa pärast.\n\n4. **MÕISTE:** Augsburgi usurahu\n   **TÄHENDUS:** 1555. aastal sõlmitud kokkulepe, mis lubas vürstil valida oma maa usu.\n\nLoodan, et aitab!",
+    "problem": {
+      "empty": "Kleebi esmalt vastus.",
+      "noCardsTitle": "Ühtegi kaarti ei leidnud",
+      "noCardsBody": "Vastuses peaksid olema read MÕISTE: ja TÄHENDUS: (või TERM: ja MEANING:). Küsi mudelilt juhendi järgi uuesti või proovi esimeses sammus JSON-varianti.",
+      "nameRequired": "Anna pakile nimi."
+    }
+  },
+  "apiError": {
+    "offline": "Ühendust ei saanud. Kontrolli internetti ja proovi uuesti.",
+    "unauthorized": "Selleks tuleb sisse logida.",
+    "notFound": "Seda enam ei ole.",
+    "invalidInput": "Server ei võtnud seda vastu. Kontrolli kaarte ja paki nime.",
+    "tooLarge": "Liiga palju korraga. Jaga vastus kaheks pakiks.",
+    "rateLimited": "Liiga palju katseid järjest. Oota hetk ja proovi uuesti.",
+    "server": "Serveris läks midagi valesti. Proovi uuesti.",
+    "unknown": "Midagi läks valesti. Proovi uuesti."
   }
 }
