@@ -27,5 +27,10 @@ export function createSupabaseRepositories(): Repositories {
       renameDeck: async () => notConnected(),
       deleteDeck: async () => notConnected(),
     },
+    cards: {
+      addCard: async () => notConnected(),
+      updateCard: async () => notConnected(),
+      deleteCard: async () => notConnected(),
+    },
   };
 }
