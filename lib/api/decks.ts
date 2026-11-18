@@ -60,3 +60,29 @@ export function deleteDeck(id: string): Promise<void> {
     method: "DELETE",
   });
 }
+
+export function addCard(
+  deckId: string,
+  card: { term: string; meaning: string; position: number },
+): Promise<DeckCard> {
+  return request<DeckCard>(`/api/decks/${encodeURIComponent(deckId)}/cards`, {
+    method: "POST",
+    body: JSON.stringify(card),
+  });
+}
+
+export function updateCard(
+  cardId: string,
+  card: { term?: string; meaning?: string; position?: number },
+): Promise<DeckCard> {
+  return request<DeckCard>(`/api/cards/${encodeURIComponent(cardId)}`, {
+    method: "PATCH",
+    body: JSON.stringify(card),
+  });
+}
+
+export function deleteCard(cardId: string): Promise<void> {
+  return request<void>(`/api/cards/${encodeURIComponent(cardId)}`, {
+    method: "DELETE",
+  });
+}

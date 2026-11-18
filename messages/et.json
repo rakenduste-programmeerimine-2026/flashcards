@@ -143,6 +143,7 @@
     "reshuffle": "Sega ülejäänud",
     "reshuffled": "Ülejäänud kaardid said uue järjekorra",
     "leave": "Lõpeta",
+    "edit": "Muuda pakki",
     "counts": {
       "knew": "Teadsin {count}",
       "missed": "Ei teadnud {count}",
@@ -169,6 +170,27 @@
       "title": "Selles pakis pole ühtegi kaarti",
       "body": "Lisa kaardid paki muutmise all, siis saab harjutama hakata.",
       "action": "Muuda pakki"
+    }
+  },
+  "editor": {
+    "title": "Muuda pakki",
+    "lede": "AI ei saa alati pihta. Paranda tähendus, lisa puuduv mõiste, viska kasutud kaardid välja.",
+    "nameLabel": "Paki nimi",
+    "termLabel": "Mõiste",
+    "meaningLabel": "Tähendus",
+    "add": "Lisa kaart",
+    "remove": "Eemalda kaart",
+    "save": "Salvesta muudatused",
+    "saving": "Salvestan…",
+    "saved": "Muudatused on salvestatud",
+    "discard": "Loobu muudatustest",
+    "back": "Tagasi pakkide juurde",
+    "practise": "Harjuta",
+    "unsaved": "Salvestamata muudatused",
+    "problem": {
+      "needName": "Pakil peab olema nimi.",
+      "needCard": "Pakis peab olema vähemalt üks kaart.",
+      "halfCard": "Igal kaardil peab olema nii mõiste kui tähendus. Täida tühjad väljad või eemalda kaart."
     }
   }
 }
