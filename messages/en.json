@@ -139,6 +139,8 @@
     "reveal": "Show the meaning",
     "knew": "I knew it",
     "missed": "I did not know",
+    "reshuffle": "Shuffle the rest",
+    "reshuffled": "The remaining cards were shuffled",
     "leave": "Finish",
     "counts": {
       "knew": "Knew {count}",

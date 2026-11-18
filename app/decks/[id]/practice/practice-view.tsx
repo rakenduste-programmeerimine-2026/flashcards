@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ErrorState } from "@/components/ui/error-state";
@@ -8,7 +8,7 @@ import { LoadingRows } from "@/components/ui/loading-rows";
 import { apiErrorKey } from "@/lib/api/errors";
 import { getDeck, type DeckCard, type DeckSummary } from "@/lib/api/decks";
 import { readShufflePreference } from "@/lib/practice/preference";
-import { shuffle } from "@/lib/practice/shuffle";
+import { reshuffleRemaining, shuffle } from "@/lib/practice/shuffle";
 import { useT } from "@/lib/i18n";
 import styles from "./practice.module.css";
 
@@ -37,6 +37,9 @@ export function PracticeView({ deckId }: { deckId: string }) {
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [ratings, setRatings] = useState<Rating[]>([]);
+  /** Short confirmation after a reshuffle, cleared again so it does not linger. */
+  const [notice, setNotice] = useState<string | null>(null);
+  const cardRef = useRef<HTMLElement>(null);
 
   const load = useCallback(async () => {
     setStatus("loading");
@@ -72,7 +75,18 @@ export function PracticeView({ deckId }: { deckId: string }) {
     setRatings((current) => [...current, rating]);
     setIndex((current) => current + 1);
     setRevealed(false);
+    setNotice(null);
   }, []);
+
+  /** Only what is still ahead moves. The card on screen stays, and a card that has
+      already been rated cannot come back in this round. */
+  const reshuffleRest = useCallback(() => {
+    setCards((current) => reshuffleRemaining(current, index + 1));
+    setNotice(t("practice.reshuffled"));
+    // Focus moves to the card that changed, not left on the button: otherwise the
+    // next Space would press the reshuffle button again instead of revealing.
+    cardRef.current?.focus();
+  }, [index, t]);
 
   const restart = useCallback(() => {
     // A second run through the same deck is shuffled again, or the toggle would
@@ -87,26 +101,38 @@ export function PracticeView({ deckId }: { deckId: string }) {
     setIndex(0);
     setRevealed(false);
     setRatings([]);
+    setNotice(null);
   }, [stored]);
+
+  useEffect(() => {
+    if (notice === null) return;
+    const timer = window.setTimeout(() => setNotice(null), 4000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
 
   // Space reveals, the arrows rate. A full round is doable without a mouse.
   useEffect(() => {
     if (status !== "ready" || !card) return;
 
     function onKeyDown(event: KeyboardEvent) {
-      // Never steal a key from a field or a focused button.
       const target = event.target as HTMLElement | null;
-      if (
-        target &&
-        (target.isContentEditable ||
-          ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(
-            target.tagName,
-          ))
-      ) {
-        return;
-      }
+      const tag = target?.tagName ?? "";
+      const typing =
+        target?.isContentEditable === true ||
+        ["INPUT", "TEXTAREA", "SELECT"].includes(tag);
 
-      if (!revealed && (event.key === " " || event.key === "Enter")) {
+      // Space and Enter belong to whatever is focused: on a button they click it,
+      // which already does the right thing. The arrows are ours either way, or
+      // using the reshuffle button would leave the keyboard dead for the round.
+      const pressedByFocus = ["BUTTON", "A"].includes(tag);
+
+      if (typing) return;
+
+      if (
+        !revealed &&
+        !pressedByFocus &&
+        (event.key === " " || event.key === "Enter")
+      ) {
         event.preventDefault();
         setRevealed(true);
         return;
@@ -189,7 +215,7 @@ export function PracticeView({ deckId }: { deckId: string }) {
         <i style={{ width: `${(ratings.length / total) * 100}%` }} />
       </div>
 
-      <article className={styles.card}>
+      <article className={styles.card} ref={cardRef} tabIndex={-1}>
         <p className={`label ${styles.cardLabel}`}>{t("card.term")}</p>
         <h1 className={styles.term}>{card.term}</h1>
 
@@ -231,8 +257,20 @@ export function PracticeView({ deckId }: { deckId: string }) {
         )}
       </div>
 
-      <p className={`label ${styles.keys}`}>
-        {revealed ? t("practice.keys.rate") : t("practice.keys.reveal")}
+      <div className={styles.aside}>
+        <p className="label">
+          {revealed ? t("practice.keys.rate") : t("practice.keys.reveal")}
+        </p>
+        {total - index > 2 ? (
+          <Button className={styles.reshuffle} onClick={reshuffleRest}>
+            {t("practice.reshuffle")}
+          </Button>
+        ) : null}
+      </div>
+
+      {/* The confirmation the issue asks for, announced as well as shown. */}
+      <p className={`label ${styles.notice}`} role="status" aria-live="polite">
+        {notice}
       </p>
 
       <p className={`label tabular ${styles.counts}`}>

@@ -18,3 +18,17 @@ export function shuffle<T>(
 
   return result;
 }
+
+/**
+ * Reorders the cards after `from`, leaving everything up to and including it where
+ * it is. Used mid-session: the card on screen stays put, the ones already answered
+ * cannot come back, and only what is still ahead is reordered.
+ */
+export function reshuffleRemaining<T>(
+  cards: readonly T[],
+  from: number,
+  random: () => number = Math.random,
+): T[] {
+  const keep = Math.max(0, Math.min(from, cards.length));
+  return [...cards.slice(0, keep), ...shuffle(cards.slice(keep), random)];
+}
