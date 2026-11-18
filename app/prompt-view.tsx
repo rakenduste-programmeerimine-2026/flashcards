@@ -102,7 +102,15 @@ export function PromptView() {
             {state === "copied" ? t("prompt.copied") : t("prompt.copy")}
           </Button>
         </div>
-        <pre ref={promptRef} className={styles.prompt} tabIndex={0}>
+        {/* Focusable so it can be scrolled from the keyboard, which makes it a
+            region a screen reader will land on - so it gets a name. */}
+        <pre
+          ref={promptRef}
+          className={styles.prompt}
+          tabIndex={0}
+          role="region"
+          aria-labelledby="prompt-label"
+        >
           {promptText}
         </pre>
         <p className={styles.hint}>{t(`prompt.variantHint.${variant}`)}</p>

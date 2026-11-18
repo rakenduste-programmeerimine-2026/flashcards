@@ -6,7 +6,7 @@
   /* 44px minimum tap target at the default font size. */
   min-height: 2.75rem;
   padding: var(--space-2) var(--space-5);
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--color-control);
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-ink);
