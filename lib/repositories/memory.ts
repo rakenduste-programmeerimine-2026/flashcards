@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { LimitReachedError } from "./types";
 import type {
   CardChanges,
   CreateDeckData,
@@ -52,7 +53,8 @@ export class MemoryStore {
   repositories(): Repositories {
     return {
       decks: {
-        createDeckWithCards: async (data) => this.createDeckWithCards(data),
+        createDeckWithCards: async (data, limits) =>
+          this.createDeckWithCards(data, limits),
         listDecks: async (ownerId) => this.listDecks(ownerId),
         getDeck: async (ownerId, deckId) => this.getDeck(ownerId, deckId),
         renameDeck: async (ownerId, deckId, name) =>
@@ -60,8 +62,8 @@ export class MemoryStore {
         deleteDeck: async (ownerId, deckId) => this.deleteDeck(ownerId, deckId),
       },
       cards: {
-        addCard: async (ownerId, deckId, card) =>
-          this.addCard(ownerId, deckId, card),
+        addCard: async (ownerId, deckId, card, limits) =>
+          this.addCard(ownerId, deckId, card, limits),
         updateCard: async (ownerId, cardId, changes) =>
           this.updateCard(ownerId, cardId, changes),
         deleteCard: async (ownerId, cardId) => this.deleteCard(ownerId, cardId),
@@ -116,10 +118,21 @@ export class MemoryStore {
     others.forEach((c, index) => (c.position = index));
   }
 
-  private addCard(ownerId: string, deckId: string, data: NewDeckCard) {
+  private addCard(
+    ownerId: string,
+    deckId: string,
+    data: NewDeckCard,
+    limits?: { maxCards?: number },
+  ) {
     const deck = this.owned(ownerId, deckId);
     if (!deck) {
       return null;
+    }
+    if (
+      limits?.maxCards !== undefined &&
+      this.inDeck(deckId).length >= limits.maxCards
+    ) {
+      throw new LimitReachedError("cards");
     }
     const card: StoredCard = {
       id: randomUUID(),
@@ -221,7 +234,18 @@ export class MemoryStore {
     return true;
   }
 
-  private createDeckWithCards(data: CreateDeckData) {
+  private createDeckWithCards(
+    data: CreateDeckData,
+    limits?: { maxDecks?: number },
+  ) {
+    if (
+      limits?.maxDecks !== undefined &&
+      this.decks.filter((d) => d.ownerId === data.ownerId).length >=
+        limits.maxDecks
+    ) {
+      throw new LimitReachedError("decks");
+    }
+
     const decksBefore = this.decks.length;
     const cardsBefore = this.cards.length;
 
