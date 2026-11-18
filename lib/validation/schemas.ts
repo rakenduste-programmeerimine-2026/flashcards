@@ -63,6 +63,24 @@ export const updateCardSchema = z
     { message: "required" },
   );
 
+const rating = z.object({
+  cardId: z
+    .string({ error: typeError })
+    .trim()
+    .min(1, "required")
+    .max(LIMITS.cardIdMax, "too_long"),
+  knew: z.boolean({ error: typeError }),
+});
+
+/** Ratings from practice, sent in batches so a fast session is not one request per card. */
+export const practiceRatingsSchema = z.object({
+  ratings: z
+    .array(rating, { error: typeError })
+    .min(1, "required")
+    .max(LIMITS.ratingsPerRequestMax, "too_many"),
+});
+
+export type PracticeRatingsInput = z.infer<typeof practiceRatingsSchema>;
 export type CreateDeckInput = z.infer<typeof createDeckSchema>;
 export type RenameDeckInput = z.infer<typeof renameDeckSchema>;
 export type CreateCardInput = z.infer<typeof createCardSchema>;

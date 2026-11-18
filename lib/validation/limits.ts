@@ -7,6 +7,9 @@ export const LIMITS = {
   termMax: 200,
   meaningMax: 1000,
   cardsPerImportMax: 200,
+  /** Ratings in one practice request. A full round of a 200-card deck fits twice over. */
+  ratingsPerRequestMax: 500,
+  cardIdMax: 100,
 } as const;
 
 export const LANGUAGES = ["et", "en"] as const;
