@@ -85,6 +85,31 @@
   flex: 0 0 auto;
 }
 
+/* --- language switch --- */
+.language {
+  display: inline-flex;
+  padding: 2px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+}
+
+.languageOption {
+  min-width: 2.25rem;
+  min-height: 1.75rem;
+  padding-inline: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-muted);
+}
+
+.languageOption[aria-pressed="true"] {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+}
+
 /* --- the three steps --- */
 .nav {
   padding-bottom: var(--space-3);

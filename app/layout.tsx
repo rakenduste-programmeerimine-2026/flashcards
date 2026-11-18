@@ -5,6 +5,8 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import { AppShell } from "@/components/shell/app-shell";
+import { I18nProvider } from "@/lib/i18n";
+import { getLocale } from "@/lib/i18n/server";
 import "./globals.css";
 
 /* Display: a grotesque with enough character to carry a flashcard term on its own. */
@@ -38,16 +40,20 @@ export const metadata: Metadata = {
     "Turn an AI answer into a practice deck: copy the prompt, paste the answer, practise the cards.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="et"
+      lang={locale}
       className={`${bricolage.variable} ${sourceSans.variable} ${plexMono.variable}`}
     >
       <body>
-        <AppShell>{children}</AppShell>
+        <I18nProvider initialLocale={locale}>
+          <AppShell>{children}</AppShell>
+        </I18nProvider>
       </body>
     </html>
   );
