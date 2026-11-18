@@ -131,5 +131,34 @@
       "cancel": "Jäta alles",
       "deleting": "Kustutan…"
     }
+  },
+  "practice": {
+    "position": "{current} / {total}",
+    "hidden": "Tähendus on peidetud",
+    "reveal": "Näita tähendust",
+    "knew": "Teadsin",
+    "missed": "Ei teadnud",
+    "leave": "Lõpeta",
+    "counts": {
+      "knew": "Teadsin {count}",
+      "missed": "Ei teadnud {count}",
+      "left": "Jäänud {count}"
+    },
+    "keys": {
+      "reveal": "Tühik näitab tähendust",
+      "rate": "Vasak nool: ei teadnud. Parem nool: teadsin"
+    },
+    "revealed": "Tähendus on nüüd näha",
+    "done": {
+      "title": "Ring läbi",
+      "score": "Teadsid {knew} kaarti {total}-st",
+      "again": "Alusta otsast",
+      "back": "Tagasi pakkide juurde"
+    },
+    "empty": {
+      "title": "Selles pakis pole ühtegi kaarti",
+      "body": "Lisa kaardid paki muutmise all, siis saab harjutama hakata.",
+      "action": "Muuda pakki"
+    }
   }
 }
