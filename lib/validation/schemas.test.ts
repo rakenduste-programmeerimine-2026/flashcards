@@ -182,3 +182,24 @@ describe("wrong shapes", () => {
     });
   });
 });
+
+describe("card position", () => {
+  it("is optional and a whole number from 0", () => {
+    expect(createCardSchema.safeParse(card).success).toBe(true);
+    expect(createCardSchema.safeParse({ ...card, position: 0 }).success).toBe(
+      true,
+    );
+    expect(updateCardSchema.safeParse({ position: 3 }).success).toBe(true);
+  });
+
+  it("rejects a negative, fractional or non-numeric position", () => {
+    for (const position of [-1, 1.5, "2", null]) {
+      expect(fieldsOf(createCardSchema, { ...card, position })).toEqual({
+        position: "invalid_value",
+      });
+      expect(fieldsOf(updateCardSchema, { position })).toEqual({
+        position: "invalid_value",
+      });
+    }
+  });
+});

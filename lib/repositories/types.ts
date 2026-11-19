@@ -61,8 +61,43 @@ export interface DeckRepository {
   deleteDeck(ownerId: string, deckId: string): Promise<boolean>;
 }
 
+export type NewDeckCard = NewCard & { position?: number };
+export type CardChanges = {
+  term?: string;
+  meaning?: string;
+  position?: number;
+};
+
+/**
+ * Single-card writes. Ownership is decided through the parent deck, so a card in
+ * somebody else's deck is the same as a card that does not exist.
+ *
+ * Positions inside a deck stay unique and gapless (0..n-1) after every call: adding
+ * or moving a card shifts the ones after it, deleting one closes the gap. A position
+ * past the end means "last".
+ */
+export interface CardRepository {
+  /** Adds a card to the owner's deck. Null if the deck is missing or not the owner's. */
+  addCard(
+    ownerId: string,
+    deckId: string,
+    card: NewDeckCard,
+  ): Promise<DeckCard | null>;
+
+  /** Changes term, meaning and/or position. Null if missing or not the owner's. */
+  updateCard(
+    ownerId: string,
+    cardId: string,
+    changes: CardChanges,
+  ): Promise<DeckCard | null>;
+
+  /** Deletes the card and closes the gap. False if missing or not the owner's. */
+  deleteCard(ownerId: string, cardId: string): Promise<boolean>;
+}
+
 export type Repositories = {
   decks: DeckRepository;
+  cards: CardRepository;
 };
 
 /** The storage cannot be reached or has not been connected yet. Handlers answer 503. */

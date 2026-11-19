@@ -1,8 +1,11 @@
 import { randomUUID } from "node:crypto";
 import type {
+  CardChanges,
   CreateDeckData,
+  DeckCard,
   DeckDetail,
   DeckSummary,
+  NewDeckCard,
   Repositories,
 } from "./types";
 
@@ -50,7 +53,80 @@ export class MemoryStore {
           this.renameDeck(ownerId, deckId, name),
         deleteDeck: async (ownerId, deckId) => this.deleteDeck(ownerId, deckId),
       },
+      cards: {
+        addCard: async (ownerId, deckId, card) =>
+          this.addCard(ownerId, deckId, card),
+        updateCard: async (ownerId, cardId, changes) =>
+          this.updateCard(ownerId, cardId, changes),
+        deleteCard: async (ownerId, cardId) => this.deleteCard(ownerId, cardId),
+      },
     };
+  }
+
+  /** The card, if its parent deck is the owner's. */
+  private ownedCard(ownerId: string, cardId: string) {
+    const card = this.cards.find((c) => c.id === cardId);
+    return card && this.owned(ownerId, card.deckId) ? card : undefined;
+  }
+
+  private inDeck(deckId: string) {
+    return this.cards
+      .filter((c) => c.deckId === deckId)
+      .sort((a, b) => a.position - b.position);
+  }
+
+  private static view({ id, term, meaning, position }: StoredCard): DeckCard {
+    return { id, term, meaning, position };
+  }
+
+  /** Puts the card at `position` among the deck's cards and renumbers them 0..n-1. */
+  private place(deckId: string, card: StoredCard, position: number) {
+    const others = this.inDeck(deckId).filter((c) => c !== card);
+    others.splice(Math.min(position, others.length), 0, card);
+    others.forEach((c, index) => (c.position = index));
+  }
+
+  private addCard(ownerId: string, deckId: string, data: NewDeckCard) {
+    const deck = this.owned(ownerId, deckId);
+    if (!deck) {
+      return null;
+    }
+    const card: StoredCard = {
+      id: randomUUID(),
+      deckId,
+      term: data.term,
+      meaning: data.meaning,
+      position: Number.MAX_SAFE_INTEGER,
+    };
+    this.cards.push(card);
+    this.place(deckId, card, data.position ?? Number.MAX_SAFE_INTEGER);
+    deck.updatedAt = new Date().toISOString();
+    return MemoryStore.view(card);
+  }
+
+  private updateCard(ownerId: string, cardId: string, changes: CardChanges) {
+    const card = this.ownedCard(ownerId, cardId);
+    if (!card) {
+      return null;
+    }
+    if (changes.term !== undefined) card.term = changes.term;
+    if (changes.meaning !== undefined) card.meaning = changes.meaning;
+    if (changes.position !== undefined) {
+      this.place(card.deckId, card, changes.position);
+    }
+    const deck = this.owned(ownerId, card.deckId);
+    if (deck) deck.updatedAt = new Date().toISOString();
+    return MemoryStore.view(card);
+  }
+
+  private deleteCard(ownerId: string, cardId: string) {
+    const card = this.ownedCard(ownerId, cardId);
+    if (!card) {
+      return false;
+    }
+    this.cards = this.cards.filter((c) => c !== card);
+    this.inDeck(card.deckId).forEach((c, index) => (c.position = index));
+    return true;
   }
 
   private owned(ownerId: string, deckId: string) {
