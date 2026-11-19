@@ -18,7 +18,12 @@
     "check:contrast": "node scripts/check-contrast.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:db": "vitest run supabase"
+    "test:db": "vitest run supabase",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:status": "supabase status",
+    "db:diff": "supabase db diff"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

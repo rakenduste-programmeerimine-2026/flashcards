@@ -15,7 +15,7 @@ import {
 /**
  * Row level security and the write functions from #7, checked against a real Postgres.
  *
- * Runs when DATABASE_TEST_URL points at an empty database, for example the local Supabase
+ * Runs when DATABASE_TEST_URL points at a database, for example the local Supabase
  * stack (`npx supabase start`, then postgresql://postgres:postgres@127.0.0.1:54322/postgres)
  * or a plain Postgres. On a plain Postgres the shim adds the bits of Supabase the migration
  * needs. Without the variable the suite is skipped, so `npm test` still works offline.
@@ -366,7 +366,8 @@ describe.skipIf(!url)(
 
       await asAdmin();
       const { rows: seen } = await db.query(
-        "select sum(times_seen)::int as n from public.cards",
+        "select sum(times_seen)::int as n from public.cards where deck_id = any($1)",
+        [[aliceDeck, bobDeck]],
       );
       expect(seen[0].n).toBe(0);
     });
