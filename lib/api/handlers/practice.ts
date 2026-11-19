@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { apiError } from "@/lib/api/server-errors";
 import { parseBody } from "@/lib/validation/parse";
 import { practiceRatingsSchema } from "@/lib/validation/schemas";
-import { storageError, type HandlerDeps } from "./deps";
+import { requireWriter, storageError, type HandlerDeps } from "./deps";
 
 /**
  * POST /api/practice/ratings, a batch of `{ cardId, knew }`.
@@ -15,7 +15,7 @@ export async function recordRatingsHandler(
   request: Request,
   deps: HandlerDeps,
 ) {
-  const auth = await deps.requireUser();
+  const auth = await requireWriter(deps);
   if (!auth.ok) {
     return auth.response;
   }

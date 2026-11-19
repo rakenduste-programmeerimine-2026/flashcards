@@ -1,14 +1,11 @@
 import { createDeckHandler } from "@/lib/api/handlers/create-deck";
+import { defaultDeps } from "@/lib/api/handlers/default-deps";
 import { listDecksHandler } from "@/lib/api/handlers/decks";
-import { requireUser } from "@/lib/auth/require-user";
-import { getRepositories } from "@/lib/repositories";
-
-const deps = () => ({ requireUser, repos: getRepositories() });
 
 export async function GET() {
-  return listDecksHandler(deps());
+  return listDecksHandler(defaultDeps());
 }
 
 export async function POST(request: Request) {
-  return createDeckHandler(request, deps());
+  return createDeckHandler(request, defaultDeps());
 }

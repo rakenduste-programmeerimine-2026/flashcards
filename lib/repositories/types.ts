@@ -42,7 +42,10 @@ export interface DeckRepository {
    * Writes the deck and all of its cards, or nothing. The cards keep the order they
    * were given in, as positions 0, 1, 2, ...
    */
-  createDeckWithCards(data: CreateDeckData): Promise<{ id: string }>;
+  createDeckWithCards(
+    data: CreateDeckData,
+    limits?: { maxDecks?: number },
+  ): Promise<{ id: string }>;
 
   /** The owner's decks with their card counts, newest first. */
   listDecks(ownerId: string): Promise<DeckSummary[]>;
@@ -82,6 +85,7 @@ export interface CardRepository {
     ownerId: string,
     deckId: string,
     card: NewDeckCard,
+    limits?: { maxCards?: number },
   ): Promise<DeckCard | null>;
 
   /** Changes term, meaning and/or position. Null if missing or not the owner's. */
@@ -119,6 +123,18 @@ export type Repositories = {
   cards: CardRepository;
   practice: PracticeRepository;
 };
+
+/**
+ * A write would take the owner over a limit. The check belongs inside the write (in the
+ * same transaction for the real adapter), so two requests at once cannot both slip
+ * under the limit. Handlers answer 409 with a code the frontend can translate.
+ */
+export class LimitReachedError extends Error {
+  constructor(readonly limit: "decks" | "cards") {
+    super(`The ${limit} limit was reached`);
+    this.name = "LimitReachedError";
+  }
+}
 
 /** The storage cannot be reached or has not been connected yet. Handlers answer 503. */
 export class RepositoryUnavailableError extends Error {
