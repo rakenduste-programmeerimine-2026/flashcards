@@ -58,5 +58,5 @@ body:
       label: Visual craft
       description: For anything the user sees.
       options:
-        - label: This issue produces something visible, so it carries the `ux: craft` label and must not look like generic AI output
+        - label: "This issue produces something visible, so it carries the `ux: craft` label and must not look like generic AI output"
           required: false
