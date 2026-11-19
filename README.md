@@ -64,8 +64,9 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-The database comes next: the local Supabase stack is issue #39 and the full step-by-step guide
-is issue #40 (`docs/SETUP.md`).
+Copy `.env.example` to `.env.local` and fill in the Supabase URL and key. Creating the Supabase
+project, applying the migrations and the local stack are in [`docs/DATABASE.md`](docs/DATABASE.md).
+The full step-by-step guide is issue #40 (`docs/SETUP.md`).
 
 | Script                 | What it does                      |
 | ---------------------- | --------------------------------- |
