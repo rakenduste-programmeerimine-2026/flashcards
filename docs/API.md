@@ -44,3 +44,32 @@ Defined in `lib/validation/limits.ts`. These numbers are a team assumption.
 | Language         | `et` or `en` |
 
 Strings are trimmed before they are checked.
+
+# Decks
+
+Data access goes through the repository interface in `lib/repositories/types.ts`. The Supabase
+adapter (`lib/repositories/supabase.ts`) is a stub until the tables from #7 exist: the endpoints
+answer `503 storage_unavailable` until then. Handlers live in `lib/api/handlers/` and are tested
+against the in-memory repository in `lib/repositories/memory.ts`.
+
+## `POST /api/decks`
+
+Needs a session. The owner is the signed-in user; the body has no owner field.
+
+```json
+{
+  "name": "History",
+  "language": "en",
+  "cards": [{ "term": "Hastings", "meaning": "Battle of 1066" }]
+}
+```
+
+`201` with `{ "id": "uuid" }`. The deck and all its cards are written together or not at all, and
+the cards keep their order as positions `0, 1, 2, ...`.
+
+| Status | Code                  | When                                           |
+| ------ | --------------------- | ---------------------------------------------- |
+| 400    | `invalid_input`       | The body breaks the rules above, nothing saved |
+| 401    | `unauthorized`        | No session, nothing saved                      |
+| 500    | `server_error`        | The write failed, nothing saved                |
+| 503    | `storage_unavailable` | The database is not connected                  |
