@@ -1,10 +1,12 @@
 import { randomUUID } from "node:crypto";
+import { LimitReachedError } from "./types";
 import type {
   CardChanges,
   CreateDeckData,
   DeckCard,
   DeckDetail,
   DeckSummary,
+  CardRating,
   NewDeckCard,
   Repositories,
 } from "./types";
@@ -40,13 +42,19 @@ export type MemoryOptions = {
 export class MemoryStore {
   decks: StoredDeck[] = [];
   cards: StoredCard[] = [];
+  /** Practice results by card id. */
+  practice = new Map<
+    string,
+    { timesSeen: number; timesKnown: number; lastPracticedAt: string }
+  >();
 
   constructor(readonly options: MemoryOptions = {}) {}
 
   repositories(): Repositories {
     return {
       decks: {
-        createDeckWithCards: async (data) => this.createDeckWithCards(data),
+        createDeckWithCards: async (data, limits) =>
+          this.createDeckWithCards(data, limits),
         listDecks: async (ownerId) => this.listDecks(ownerId),
         getDeck: async (ownerId, deckId) => this.getDeck(ownerId, deckId),
         renameDeck: async (ownerId, deckId, name) =>
@@ -54,13 +62,37 @@ export class MemoryStore {
         deleteDeck: async (ownerId, deckId) => this.deleteDeck(ownerId, deckId),
       },
       cards: {
-        addCard: async (ownerId, deckId, card) =>
-          this.addCard(ownerId, deckId, card),
+        addCard: async (ownerId, deckId, card, limits) =>
+          this.addCard(ownerId, deckId, card, limits),
         updateCard: async (ownerId, cardId, changes) =>
           this.updateCard(ownerId, cardId, changes),
         deleteCard: async (ownerId, cardId) => this.deleteCard(ownerId, cardId),
       },
+      practice: {
+        recordRatings: async (ownerId, ratings) =>
+          this.recordRatings(ownerId, ratings),
+      },
     };
+  }
+
+  private recordRatings(ownerId: string, ratings: CardRating[]) {
+    // Check every card first, so a foreign one means nothing is written at all.
+    if (ratings.some((r) => !this.ownedCard(ownerId, r.cardId))) {
+      return null;
+    }
+    const now = new Date().toISOString();
+    for (const { cardId, knew } of ratings) {
+      const stats = this.practice.get(cardId) ?? {
+        timesSeen: 0,
+        timesKnown: 0,
+        lastPracticedAt: now,
+      };
+      stats.timesSeen += 1;
+      if (knew) stats.timesKnown += 1;
+      stats.lastPracticedAt = now;
+      this.practice.set(cardId, stats);
+    }
+    return { recorded: ratings.length };
   }
 
   /** The card, if its parent deck is the owner's. */
@@ -86,10 +118,21 @@ export class MemoryStore {
     others.forEach((c, index) => (c.position = index));
   }
 
-  private addCard(ownerId: string, deckId: string, data: NewDeckCard) {
+  private addCard(
+    ownerId: string,
+    deckId: string,
+    data: NewDeckCard,
+    limits?: { maxCards?: number },
+  ) {
     const deck = this.owned(ownerId, deckId);
     if (!deck) {
       return null;
+    }
+    if (
+      limits?.maxCards !== undefined &&
+      this.inDeck(deckId).length >= limits.maxCards
+    ) {
+      throw new LimitReachedError("cards");
     }
     const card: StoredCard = {
       id: randomUUID(),
@@ -191,7 +234,18 @@ export class MemoryStore {
     return true;
   }
 
-  private createDeckWithCards(data: CreateDeckData) {
+  private createDeckWithCards(
+    data: CreateDeckData,
+    limits?: { maxDecks?: number },
+  ) {
+    if (
+      limits?.maxDecks !== undefined &&
+      this.decks.filter((d) => d.ownerId === data.ownerId).length >=
+        limits.maxDecks
+    ) {
+      throw new LimitReachedError("decks");
+    }
+
     const decksBefore = this.decks.length;
     const cardsBefore = this.cards.length;
 

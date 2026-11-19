@@ -80,6 +80,28 @@ The full step-by-step guide is issue #40 (`docs/SETUP.md`).
 
 Never commit `.env.local`. `.env.example` holds placeholder values only.
 
+## Limits
+
+The API refuses work above these numbers so one paste or one script cannot fill the database or
+hang the app. They are a team assumption, defined in `lib/validation/limits.ts`; change them there
+and every endpoint follows. Normal use is far below all of them: a 40-card import is about 4 KB
+and one write.
+
+| What                                         | Limit                                     | When it is hit                                    |
+| -------------------------------------------- | ----------------------------------------- | ------------------------------------------------- |
+| Body of the import route (`POST /api/decks`) | 512 KB                                    | `413 too_large`, nothing is read                  |
+| Body of every other write route              | 64 KB                                     | `413 too_large`                                   |
+| Cards in one import                          | 200                                       | `400 invalid_input`, `too_many`                   |
+| Cards in one deck                            | 500                                       | `409 card_limit_reached`                          |
+| Decks per user                               | 50                                        | `409 deck_limit_reached`                          |
+| Writes per user                              | 120 per minute, all write routes together | `429 rate_limited`, with `Retry-After` in seconds |
+| Ratings in one practice request              | 500                                       | `400 invalid_input`, `too_many`                   |
+
+Reads (`GET`) are not rate limited. The rate limit counts in the memory of one server instance, so
+on a serverless host the real limit can be higher and the counts reset when an instance is
+recycled. It is there to stop a runaway client, not to enforce a quota. Every error is a stable
+code the frontend translates; see [docs/API.md](docs/API.md).
+
 ## Project layout
 
 ```

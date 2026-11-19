@@ -32,5 +32,9 @@ export function createSupabaseRepositories(): Repositories {
       updateCard: async () => notConnected(),
       deleteCard: async () => notConnected(),
     },
+    // TODO(#28): needs the practice result columns or table.
+    practice: {
+      recordRatings: async () => notConnected(),
+    },
   };
 }

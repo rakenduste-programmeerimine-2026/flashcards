@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { apiError } from "@/lib/api/server-errors";
+import { LIMITS } from "@/lib/validation/limits";
 import { parseBody } from "@/lib/validation/parse";
 import { createCardSchema, updateCardSchema } from "@/lib/validation/schemas";
-import { storageError, type HandlerDeps } from "./deps";
+import { requireWriter, storageError, type HandlerDeps } from "./deps";
 
 /**
  * Single-card writes. The repository decides ownership through the parent deck, and a
@@ -16,7 +17,7 @@ export async function addCardHandler(
   deckId: string,
   deps: HandlerDeps,
 ) {
-  const auth = await deps.requireUser();
+  const auth = await requireWriter(deps);
   if (!auth.ok) {
     return auth.response;
   }
@@ -31,6 +32,7 @@ export async function addCardHandler(
       auth.user.id,
       deckId,
       parsed.data,
+      { maxCards: LIMITS.cardsPerDeckMax },
     );
     return card
       ? NextResponse.json(card, { status: 201 })
@@ -46,7 +48,7 @@ export async function updateCardHandler(
   cardId: string,
   deps: HandlerDeps,
 ) {
-  const auth = await deps.requireUser();
+  const auth = await requireWriter(deps);
   if (!auth.ok) {
     return auth.response;
   }
@@ -70,7 +72,7 @@ export async function updateCardHandler(
 
 /** DELETE /api/cards/:id */
 export async function deleteCardHandler(cardId: string, deps: HandlerDeps) {
-  const auth = await deps.requireUser();
+  const auth = await requireWriter(deps);
   if (!auth.ok) {
     return auth.response;
   }
