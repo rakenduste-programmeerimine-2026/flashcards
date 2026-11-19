@@ -48,8 +48,9 @@ Strings are trimmed before they are checked.
 # Decks
 
 Data access goes through the repository interface in `lib/repositories/types.ts`. The Supabase
-adapter (`lib/repositories/supabase.ts`) is a stub until the tables from #7 exist: the endpoints
-answer `503 storage_unavailable` until then. Handlers live in `lib/api/handlers/` and are tested
+adapter (`lib/repositories/supabase.ts`) talks to the tables and functions from #7 and #28 as the
+signed-in user, so row level security applies; without Supabase configured the endpoints answer
+`503 storage_unavailable`. Handlers live in `lib/api/handlers/` and are tested
 against the in-memory repository in `lib/repositories/memory.ts`.
 
 ## `POST /api/decks`
@@ -168,8 +169,8 @@ someone else the whole batch answers `404 not_found` and nothing is recorded. `4
 names the failing rating, for example `ratings.1.knew`. Without a session: `401 unauthorized`.
 
 A failed request should not interrupt practice: keep the ratings and send them with the next
-batch, or drop them. The storage for the counters is #28; until it exists the route answers
-`503 storage_unavailable`.
+batch, or drop them. The counters are stored on the card (#28) by the `record_ratings` function,
+which writes the whole batch or nothing.
 
 # Limits and rate limiting
 
