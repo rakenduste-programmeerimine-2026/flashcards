@@ -4,6 +4,8 @@ Turn an AI answer into a practice deck. A student copies a ready-made prompt int
 AI chat together with their study material, pastes the answer back here, and gets flashcards
 they can practise in random order.
 
+**Live app:** https://flashcards-sigma-two.vercel.app (deployment: [docs/DEPLOY.md](docs/DEPLOY.md))
+
 The AI is never connected to this app. The study material stays on the student's own computer;
 only the finished answer is pasted in.
 
@@ -119,6 +121,8 @@ docs/          planning, design and setup documentation
 | [CONTRIBUTING.md](CONTRIBUTING.md)   | Branch names, commit format, one issue one PR, review rules |
 | [docs/BACKLOG.md](docs/BACKLOG.md)   | The Kanban board and the full backlog by cycle and role     |
 | [docs/TIMELINE.md](docs/TIMELINE.md) | The four cycles, the midpoint demo and the deadline         |
+| [docs/DATABASE.md](docs/DATABASE.md) | Supabase setup, the local stack and schema changes          |
+| [docs/DEPLOY.md](docs/DEPLOY.md)     | The live URL, Vercel settings and how to deploy             |
 
 ## Project status
 
