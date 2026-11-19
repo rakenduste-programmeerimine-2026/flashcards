@@ -1,6 +1,6 @@
 name: CI
 
-# Every pull request and every push to main: lint, types, unit tests, the database
+# Every pull request and every push to main: format, lint, types, unit tests, the database
 # tests against a real Postgres, and a production build. A red check blocks the merge.
 
 on:
@@ -49,6 +49,7 @@ jobs:
           cache: npm
 
       - run: npm ci
+      - run: npm run format:check
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
