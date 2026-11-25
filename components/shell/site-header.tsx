@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useT } from "@/lib/i18n";
+import { AccountControl } from "./account-control";
 import { LanguageSwitch } from "./language-switch";
 import { StepNav } from "./step-nav";
 import styles from "./shell.module.css";
@@ -58,6 +59,7 @@ export function SiteHeader() {
         <p className={`label ${styles.tagline}`}>{t("app.tagline")}</p>
         <div className={styles.slot}>
           <LanguageSwitch />
+          <AccountControl />
         </div>
       </div>
       <StepNav />

@@ -56,9 +56,9 @@ Copy this table for every run.
 
 **Success criterion met?** yes / no, and why: `____`
 
-## Known gaps on 19 November
+## Notes
 
-- There is no sign-in page in the interface yet. `POST /api/auth/sign-in` exists (#44), but step 5
-  cannot be done from the screens until a page calls it.
+- Sign-in is on `/sign-in` (#79). Saving a deck while signed out offers "Sign in and save"; the
+  pasted answer is kept in the tab and comes back after sign-in.
 - Step 11 is also covered by the automated checks in `supabase/tests/rls.test.ts` (#71), so a
   failure here and a pass there points at the app, not the database.
