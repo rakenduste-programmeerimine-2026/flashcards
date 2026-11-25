@@ -1,10 +1,13 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
+import { signInHref } from "@/lib/api/auth";
+import { ApiError } from "@/lib/api/client";
 import { apiErrorKey } from "@/lib/api/errors";
 import { createDeck } from "@/lib/api/decks";
+import { saveDraft, takeDraft } from "@/lib/import/draft";
 import { parseAnswer } from "@/lib/import/parse-answer";
 import type { ParseResult } from "@/lib/import/types";
 import { useLocale, useT } from "@/lib/i18n";
@@ -27,6 +30,16 @@ export function PasteView() {
   const [name, setName] = useState("");
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [needsSignIn, setNeedsSignIn] = useState(false);
+
+  // Back from the sign-in page: put the answer and the name back and show the cards.
+  useEffect(() => {
+    const draft = takeDraft(window.sessionStorage);
+    if (!draft) return;
+    setAnswer(draft.answer);
+    setName(draft.name);
+    setResult(parseAnswer(draft.answer));
+  }, []);
 
   const cards = result?.cards ?? [];
   const hasCards = cards.length > 0;
@@ -57,6 +70,7 @@ export function PasteView() {
   }
 
   function restart() {
+    setNeedsSignIn(false);
     setAnswer("");
     setResult(null);
     setName("");
@@ -80,6 +94,10 @@ export function PasteView() {
       });
       router.push(`/decks?saved=${encodeURIComponent(deck.id)}`);
     } catch (error) {
+      if (error instanceof ApiError && error.status === 401) {
+        saveDraft(window.sessionStorage, { answer, name });
+        setNeedsSignIn(true);
+      }
       setSaveError(t(apiErrorKey(error)));
       setSaving(false);
     }
@@ -187,9 +205,15 @@ export function PasteView() {
             ) : null}
 
             <div className={styles.actions}>
-              <Button variant="primary" onClick={save} disabled={saving}>
-                {saving ? t("paste.saving") : t("paste.save")}
-              </Button>
+              {needsSignIn ? (
+                <ButtonLink variant="primary" href={signInHref("/paste")}>
+                  {t("auth.pasteSignIn")}
+                </ButtonLink>
+              ) : (
+                <Button variant="primary" onClick={save} disabled={saving}>
+                  {saving ? t("paste.saving") : t("paste.save")}
+                </Button>
+              )}
               <Button onClick={restart} disabled={saving}>
                 {t("paste.restart")}
               </Button>

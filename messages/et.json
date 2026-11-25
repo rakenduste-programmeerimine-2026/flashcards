@@ -109,6 +109,7 @@
   "apiError": {
     "offline": "Ühendust ei saanud. Kontrolli internetti ja proovi uuesti.",
     "unauthorized": "Selleks tuleb sisse logida.",
+    "invalidCredentials": "Vale e-post või parool.",
     "notFound": "Seda enam ei ole.",
     "invalidInput": "Server ei võtnud seda vastu. Kontrolli kaarte ja paki nime.",
     "tooLarge": "Liiga palju korraga. Jaga vastus kaheks pakiks.",
@@ -198,6 +199,19 @@
     "paste": "Kleebi vastus",
     "decks": "Minu pakid",
     "practice": "Harjutamine",
-    "edit": "Paki muutmine"
+    "edit": "Paki muutmine",
+    "signIn": "Sisselogimine"
+  },
+  "auth": {
+    "signIn": "Logi sisse",
+    "title": "Logi sisse",
+    "lede": "Pakkide salvestamiseks ja harjutamiseks logi sisse oma kontoga.",
+    "email": "E-post",
+    "password": "Parool",
+    "submit": "Logi sisse",
+    "signingIn": "Login sisse…",
+    "signOut": "Logi välja",
+    "missing": "Sisesta e-post ja parool.",
+    "pasteSignIn": "Logi sisse ja salvesta"
   }
 }

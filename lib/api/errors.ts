@@ -8,6 +8,7 @@ import { ApiError } from "./client";
 const MESSAGES: Record<string, MessageKey> = {
   offline: "apiError.offline",
   unauthorized: "apiError.unauthorized",
+  invalid_credentials: "apiError.invalidCredentials",
   not_found: "apiError.notFound",
   invalid_input: "apiError.invalidInput",
   too_large: "apiError.tooLarge",

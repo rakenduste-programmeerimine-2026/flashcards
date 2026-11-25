@@ -109,6 +109,7 @@
   "apiError": {
     "offline": "No connection. Check your internet and try again.",
     "unauthorized": "You have to sign in for this.",
+    "invalidCredentials": "Wrong email or password.",
     "notFound": "That is not there any more.",
     "invalidInput": "The server would not take this. Check the cards and the deck name.",
     "tooLarge": "Too much at once. Split the answer into two decks.",
@@ -198,6 +199,19 @@
     "paste": "Paste the answer",
     "decks": "My decks",
     "practice": "Practice",
-    "edit": "Editing the deck"
+    "edit": "Editing the deck",
+    "signIn": "Sign in"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "title": "Sign in",
+    "lede": "Sign in with your account to save and practise decks.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "signingIn": "Signing in…",
+    "signOut": "Sign out",
+    "missing": "Enter your email and password.",
+    "pasteSignIn": "Sign in and save"
   }
 }
